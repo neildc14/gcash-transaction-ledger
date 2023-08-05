@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const transactions = require("./routes/transactions");
+
 //middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -19,6 +20,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 });
 
 let db = mongoose.connection;
+
 db.once("open", () => {
   console.log("Connected to the database.");
 });
