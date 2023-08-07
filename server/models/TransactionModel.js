@@ -9,7 +9,7 @@ const TransactionSchema = new Schema(
       enum: ["cash-in", "cash-out", "bank-transfer"],
       required: true,
     },
-    customer: { type: Schema.Types.ObjectId, ref: "Customer", required: true },
+    customer: { type: String, required: true },
     account_number: { type: String, required: true },
     service_fee: {
       type: Number,

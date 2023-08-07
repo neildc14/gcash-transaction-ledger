@@ -1,24 +1,21 @@
 const express = require("express");
 const router = express.Router();
+const {
+  getAllTransactions,
+  getTransaction,
+  postTransaction,
+  updateTransaction,
+  deleteTransaction,
+} = require("../controllers/transactionController");
 
-router.get("/", (req, res) => {
-  res.send({ message: "hello" });
-});
+router.get("/", getAllTransactions);
 
-router.get("/:id", (req, res) => {
-  res.send({ message: "hello id" });
-});
+router.get("/:id", getTransaction);
 
-router.post("/", (req, res) => {
-  res.send({ message: "hello" });
-});
+router.post("/", postTransaction);
 
-router.put("/:id", (req, res) => {
-  res.send({ message: "hello" });
-});
+router.put("/:id", updateTransaction);
 
-router.delete("/:id", (req, res) => {
-  res.send({ message: "hello" });
-});
+router.delete("/:id", deleteTransaction);
 
 module.exports = router;
