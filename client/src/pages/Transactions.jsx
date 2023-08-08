@@ -1,30 +1,11 @@
+import { useQuery } from "@tanstack/react-query";
+import fetchTransactions from "../services/fetchTransactions";
+
 const Transactions = () => {
-  const dummyData = [
-    {
-      transaction_type: "cash-in",
-      customer: "Neil Edward Dela Cruz",
-      account_number: "09653488807",
-      service_fee: 20,
-      sub_total: 100,
-      total: 120,
-    },
-    {
-      transaction_type: "cash-in",
-      customer: "Juan Dela Cruz",
-      account_number: "09653488807",
-      service_fee: 20,
-      sub_total: 100,
-      total: 120,
-    },
-    {
-      transaction_type: "cash-in",
-      customer: "Camille Joy Dela Cruz",
-      account_number: "09653488807",
-      service_fee: 20,
-      sub_total: 100,
-      total: 120,
-    },
-  ];
+  const { data, error, isError } = useQuery({
+    queryKey: ["transactions"],
+    queryFn: fetchTransactions,
+  });
 
   return (
     <main className="pt-4 h-screen ">
@@ -50,71 +31,79 @@ const Transactions = () => {
       </div>
 
       <section className="mt-10  px-2  ">
-        {dummyData.map((data) => (
-          <div
-            key={data.customer}
-            className="mb-2 flex align-top justify-between px-2 py-2 rounded-md shadow-sm bg-white border-l-4 border border-l-blue-500"
-          >
-            <div>
-              <p className="font-semibold text-lg text-blue-900">
-                {data.customer}
-              </p>
-              <p className="text-semibold text-base text-slate-500">
-                {data.transaction_type.toLocaleUpperCase()}
-              </p>
-              <p className=" text-base text-slate-500"> {data.total}</p>
-            </div>
+        {!isError &&
+          data?.map((data) => (
+            <div
+              key={data._id}
+              className="mb-2 flex  justify-between px-2 py-2 rounded-md shadow-sm bg-white border-l-4 border border-l-blue-500"
+            >
+              <div>
+                <p className="font-semibold text-lg text-blue-900">
+                  {data.customer[0].toLocaleUpperCase() +
+                    data.customer.slice(1)}
+                </p>
+                <p className="text-semibold text-base text-slate-500">
+                  {data.transaction_type.toLocaleUpperCase()}
+                </p>
+                <p className=" text-base text-slate-500"> {data.total}</p>
+              </div>
 
-            <div className="flex gap-3">
-              <button className="h-0">
-                <svg
-                  width={25}
-                  height={25}
-                  fill="none"
-                  stroke="#484747"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M14.121 14.121A3 3 0 1 0 9.88 9.88a3 3 0 0 0 4.242 4.242Z" />
-                  <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7Z" />
-                </svg>
-              </button>
-              <button className="h-0">
-                <svg
-                  width={25}
-                  height={25}
-                  fill="none"
-                  stroke="#484747"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="m15.232 5.232 3.536 3.536m-2.036-5.036a2.5 2.5 0 0 1 3.536 3.536L6.5 21.036H3v-3.572L16.732 3.732Z" />
-                </svg>
-              </button>
-              <button className="h-0">
-                <svg
-                  width={25}
-                  height={25}
-                  fill="none"
-                  stroke="#484747"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M10 11v6m4-6v6M4 7h16m-1 0-.867 12.142A2 2 0 0 1 16.138 21H7.862a2 2 0 0 1-1.995-1.858L5 7h14Zm-4 0V4a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v3h6Z" />
-                </svg>
-              </button>
+              <div className="flex gap-3">
+                <button className="h-0">
+                  <svg
+                    width={25}
+                    height={25}
+                    fill="none"
+                    stroke="#484747"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M14.121 14.121A3 3 0 1 0 9.88 9.88a3 3 0 0 0 4.242 4.242Z" />
+                    <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7Z" />
+                  </svg>
+                </button>
+                <button className="h-0">
+                  <svg
+                    width={25}
+                    height={25}
+                    fill="none"
+                    stroke="#484747"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="m15.232 5.232 3.536 3.536m-2.036-5.036a2.5 2.5 0 0 1 3.536 3.536L6.5 21.036H3v-3.572L16.732 3.732Z" />
+                  </svg>
+                </button>
+                <button className="h-0">
+                  <svg
+                    width={25}
+                    height={25}
+                    fill="none"
+                    stroke="#484747"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M10 11v6m4-6v6M4 7h16m-1 0-.867 12.142A2 2 0 0 1 16.138 21H7.862a2 2 0 0 1-1.995-1.858L5 7h14Zm-4 0V4a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v3h6Z" />
+                  </svg>
+                </button>
+              </div>
             </div>
+          ))}
+        {isError && (
+          <div className=" px-2 py-2 rounded-md shadow-sm bg-white border-l-4 border border-l-red-500">
+            <p>{error}</p>
+            <p>No Transactions Found</p>
           </div>
-        ))}
+        )}
       </section>
     </main>
   );
