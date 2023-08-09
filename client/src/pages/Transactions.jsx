@@ -1,11 +1,70 @@
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import fetchTransactions from "../services/fetchTransactions";
 
 const Transactions = () => {
+  const [transaction_results, setTransactionResults] = useState([]);
+
   const { data, error, isError } = useQuery({
     queryKey: ["transactions"],
     queryFn: fetchTransactions,
   });
+
+  useEffect(() => {
+    setTransactionResults(data);
+  }, [data]);
+
+  const clickTabeMenu = (e) => {
+    const tabValue = e.target.value.toLocaleLowerCase();
+
+    switch (tabValue) {
+      case "all":
+        setTransactionResults(data);
+        break;
+      case "cash-in":
+        setTransactionResults(filterByTabMenu(tabValue));
+        break;
+      case "cash-out":
+        setTransactionResults(filterByTabMenu(tabValue));
+        break;
+      case "bank-transfer":
+        setTransactionResults(filterByTabMenu(tabValue));
+        break;
+
+      default:
+        null;
+        break;
+    }
+  };
+
+  function filterByTabMenu(tabValue) {
+    return data?.filter(
+      (transaction) =>
+        transaction.transaction_type === tabValue.toLocaleLowerCase()
+    );
+  }
+
+  const searchTransaction = (e) => {
+    e.preventDefault();
+    const searchValue = e.target.value;
+
+    // Remove spaces from the search value
+    const searchWithoutSpaces = searchValue.replace(/\s+/g, "");
+
+    // Create a pattern that allows for partial matches
+    const pattern = searchWithoutSpaces
+      .split("")
+      .map((char) => `${char}.*`)
+      .join("");
+
+    const regex = new RegExp(pattern, "i");
+
+    let results = data.filter((transaction) =>
+      regex.test(transaction.customer)
+    );
+
+    setTransactionResults(results);
+  };
 
   return (
     <main className="pt-4 h-screen ">
@@ -29,13 +88,54 @@ const Transactions = () => {
           </svg>
         </div>
       </div>
+      <div className="pt-4 flex justify-evenly">
+        <input
+          type="button"
+          className=" focus:text-blue-600 focus:font-semibold"
+          value="All"
+          onClick={clickTabeMenu}
+        />
+        <input
+          type="button"
+          className=" focus:text-blue-600 focus:font-semibold"
+          value="Cash-in"
+          onClick={clickTabeMenu}
+        />
+        <input
+          type="button"
+          className=" focus:text-blue-600 focus:font-semibold"
+          value="Cash-out"
+          onClick={clickTabeMenu}
+        />
+        <input
+          type="button"
+          className=" focus:text-blue-600 focus:font-semibold"
+          value="Bank-transfer"
+          onClick={clickTabeMenu}
+        />
+      </div>
+      <div className="mt-10 w-100 flex gap-4 mx-2">
+        <input
+          type="search"
+          name="search"
+          id=""
+          placeholder="Search transaction"
+          className="w-full p-2 outline outline-blue-500 rounded-md"
+          onChange={searchTransaction}
+        />
+        <input
+          type="submit"
+          value="Search"
+          className="px-4 rounded-md bg-blue-500 text-slate-50 "
+        />
+      </div>
 
       <section className="mt-10  px-2  ">
         {!isError &&
-          data?.map((data) => (
+          transaction_results?.map((data) => (
             <div
               key={data._id}
-              className="mb-2 flex  justify-between px-2 py-2 rounded-md shadow-sm bg-white border-l-4 border border-l-blue-500"
+              className="mb-2 flex  justify-between px-2 py-2 rounded-md shadow-sm bg-white border-b-2 border border-l-4 border-l-blue-500"
             >
               <div>
                 <p className="font-semibold text-lg text-blue-900">
@@ -48,7 +148,7 @@ const Transactions = () => {
                 <p className=" text-base text-slate-500"> {data.total}</p>
               </div>
 
-              <div className="flex gap-3">
+              <div className="flex self-start  gap-3 ">
                 <button className="h-0">
                   <svg
                     width={25}
@@ -98,12 +198,13 @@ const Transactions = () => {
               </div>
             </div>
           ))}
-        {isError && (
-          <div className=" px-2 py-2 rounded-md shadow-sm bg-white border-l-4 border border-l-red-500">
-            <p>{error}</p>
-            <p>No Transactions Found</p>
-          </div>
-        )}
+        {isError ||
+          (transaction_results?.length === 0 && (
+            <div className=" px-2 py-6 rounded-md shadow-sm bg-white border-l-4 border border-l-red-500">
+              <p>{error}</p>
+              <p>No Transactions Found</p>
+            </div>
+          ))}
       </section>
     </main>
   );
