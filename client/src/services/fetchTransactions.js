@@ -1,7 +1,9 @@
 import axios from "axios";
 
 const fetchTransactions = async () => {
-  const response = await axios.get("http://localhost:3000/api/transactions");
+  const ENDPOINT = import.meta.env.VITE_REACT_APP_ENDPOINT;
+
+  const response = await axios.get(ENDPOINT);
 
   return response.data;
 };

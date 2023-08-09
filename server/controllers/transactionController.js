@@ -40,7 +40,7 @@ const getTransaction = async (req, res) => {
 };
 
 const postTransaction = async (req, res) => {
-  const { transaction_type, name, account_number, service_fee, sub_total } =
+  const { transaction_type, customer, account_number, service_fee, sub_total } =
     req.body;
 
   try {
@@ -48,10 +48,10 @@ const postTransaction = async (req, res) => {
 
     const newTransaction = await Transaction.create({
       transaction_type,
-      customer: name,
+      customer: customer,
       account_number,
-      service_fee,
-      sub_total,
+      service_fee: Number(service_fee),
+      sub_total: Number(sub_total),
       total: service_fee + sub_total,
     });
 
@@ -68,7 +68,7 @@ const postTransaction = async (req, res) => {
 
 const updateTransaction = async (req, res) => {
   const { id } = req.params;
-  const { transaction_type, name, account_number, service_fee, sub_total } =
+  const { transaction_type, customer, account_number, service_fee, sub_total } =
     req.body;
   const filter = { _id: id };
 
@@ -82,16 +82,18 @@ const updateTransaction = async (req, res) => {
 
     const updatedTransaction = await Transaction.findOneAndUpdate(filter, {
       transaction_type,
-      customer: name,
+      customer: customer,
       account_number,
-      service_fee,
-      sub_total,
+      service_fee: Number(service_fee),
+      sub_total: Number(sub_total),
       total: service_fee + sub_total,
     });
+
     if (!updatedTransaction) {
       error = { message: "Failed to update transaction" };
       throw error;
     }
+
     res.status(200).json(updatedTransaction);
   } catch (error) {
     res.status(400).json(error);
