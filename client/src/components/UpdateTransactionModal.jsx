@@ -22,6 +22,7 @@ const UpdateTransactionModal = ({
       queryClient.invalidateQueries(
         import.meta.env.VITE_REACT_APP_TRANSACTION_KEY
       );
+      closeModal();
     },
   });
 
@@ -39,7 +40,6 @@ const UpdateTransactionModal = ({
     const formData = new FormData(transactionEvent.currentTarget);
     const transactionData = Object.fromEntries(formData);
     transactionMutation.mutate(transactionData);
-    closeModal();
   };
 
   return (

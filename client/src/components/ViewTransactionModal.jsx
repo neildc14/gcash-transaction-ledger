@@ -48,6 +48,8 @@ const ViewTransactionModal = ({ modalOpen, closeModal, transaction_slip }) => {
 };
 
 ViewTransactionModal.propTypes = {
+  modalOpen: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
   transaction_slip: PropTypes.object.isRequired,
 };
 export default ViewTransactionModal;

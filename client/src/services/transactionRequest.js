@@ -31,4 +31,9 @@ export default class TransactionRequest extends HTTPRequest {
     const httpPut = new HttpPut();
     return await httpPut.request(`${this.endpoint}${this.uri}${id}`, data);
   }
+
+  async deleteTransaction(id) {
+    const httpDelete = new HttpDelete();
+    return await httpDelete.request(`${this.endpoint}${this.uri}${id}`);
+  }
 }
