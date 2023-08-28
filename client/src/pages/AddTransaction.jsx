@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { postTransaction } from "../services/transactionMethods";
 import { useNavigate } from "react-router-dom";
+import TransactionRequest from "../services/transactionRequest";
 
 const AddTransaction = () => {
   const [isSuccessful, setSuccessful] = useState(false);
-
-  const mutation = useMutation({
-    mutationFn: postTransaction,
+  const transactionRequest = new TransactionRequest();
+  const createTransactionMutation = useMutation({
+    mutationFn: (new_transaction) =>
+      transactionRequest.createTransaction(new_transaction),
     onError: (error) => {
       console.log(error);
     },
@@ -16,17 +17,16 @@ const AddTransaction = () => {
     },
   });
 
-  const submitTransaction = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData);
-    console.log(data);
-    mutation.mutate(data);
+  const submitTransaction = (createEvent) => {
+    createEvent.preventDefault();
+    const formData = new FormData(createEvent.currentTarget);
+    const transaction_slip = Object.fromEntries(formData);
+    createTransactionMutation.mutate(transaction_slip);
   };
 
-  const history = useNavigate();
-  const goBack = () => {
-    history(-1);
+  const navigationHistory = useNavigate();
+  const goBackToPreviousPage = () => {
+    navigationHistory(-1);
   };
 
   const closeMessage = () => {
@@ -81,7 +81,7 @@ const AddTransaction = () => {
         <div className="py-4">
           <button
             className=" py-1 px-6 rounded-sm bg-gray-200 text-lg font-semibold"
-            onClick={goBack}
+            onClick={goBackToPreviousPage}
           >
             Back
           </button>
