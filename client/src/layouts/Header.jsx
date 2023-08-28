@@ -54,7 +54,7 @@ const Header = () => {
 
 function SideBar() {
   return (
-    <div className="h-screen  bg-blue-500 z-10 transition ease-out  duration-500">
+    <div className="h-screen  bg-blue-500 z-10 transition ease-out  duration-500 ">
       <nav className="pt-40 flex justify-center items-center flex-col gap-4">
         <a
           href="/add-transaction"

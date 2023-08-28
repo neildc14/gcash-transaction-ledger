@@ -9,21 +9,25 @@ const Transactions = () => {
   const [transaction_results, setTransactionResults] = useState([]);
   const [transaction_slip, setTransactionSlip] = useState({});
 
-  const { data, error, isError } = useQuery({
+  const {
+    data: transactions_data,
+    error,
+    isError,
+  } = useQuery({
     queryKey: ["transactions"],
     queryFn: fetchTransactions,
   });
 
   useEffect(() => {
-    setTransactionResults(data);
-  }, [data]);
+    setTransactionResults(transactions_data);
+  }, [transactions_data]);
 
   const clickTabeMenu = (e) => {
     const tabValue = e.target.value.toLocaleLowerCase();
 
     switch (tabValue) {
       case "all":
-        setTransactionResults(data);
+        setTransactionResults(transactions_data);
         break;
       case "cash-in":
         setTransactionResults(filterByTabMenu(tabValue));
@@ -42,15 +46,15 @@ const Transactions = () => {
   };
 
   function filterByTabMenu(tabValue) {
-    return data?.filter(
+    return transactions_data?.filter(
       (transaction) =>
         transaction.transaction_type === tabValue.toLocaleLowerCase()
     );
   }
 
-  const searchTransaction = (e) => {
-    e.preventDefault();
-    const searchValue = e.target.value;
+  const searchTransaction = (searchEvent) => {
+    searchEvent.preventDefault();
+    const searchValue = searchEvent.target.value;
 
     // Remove spaces from the search value
     const searchWithoutSpaces = searchValue.replace(/\s+/g, "");
@@ -63,11 +67,11 @@ const Transactions = () => {
 
     const regex = new RegExp(pattern, "i");
 
-    let results = data.filter((transaction) =>
+    let searchResults = transactions_data.filter((transaction) =>
       regex.test(transaction.customer)
     );
 
-    setTransactionResults(results);
+    setTransactionResults(searchResults);
   };
 
   const [modalViewOpen, setModalViewOpen] = useState(false);
@@ -163,20 +167,23 @@ const Transactions = () => {
 
         <section className="mt-10  px-2  ">
           {!isError &&
-            transaction_results?.map((data) => (
+            transaction_results?.map((transaction) => (
               <div
-                key={data._id}
+                key={transaction._id}
                 className="z-10 mb-2 flex  justify-between px-2 py-2 rounded-md shadow-sm bg-white border-b-2 border border-l-4 border-l-blue-500"
               >
                 <div>
                   <p className="font-semibold text-lg text-blue-900">
-                    {data.customer[0].toLocaleUpperCase() +
-                      data.customer.slice(1)}
+                    {transaction.customer[0].toLocaleUpperCase() +
+                      transaction.customer.slice(1)}
                   </p>
                   <p className="text-semibold text-base text-slate-500">
-                    {data.transaction_type.toLocaleUpperCase()}
+                    {transaction.transaction_type.toLocaleUpperCase()}
                   </p>
-                  <p className=" text-base text-slate-500"> {data.total}</p>
+                  <p className=" text-base text-slate-500">
+                    {" "}
+                    {transaction.total}
+                  </p>
                 </div>
 
                 <div className="flex self-start  gap-3 ">
@@ -184,7 +191,7 @@ const Transactions = () => {
                     className="h-0"
                     onClick={() => {
                       openViewModal();
-                      setTransactionSlip(data);
+                      setTransactionSlip(transaction);
                     }}
                   >
                     <svg
@@ -206,7 +213,7 @@ const Transactions = () => {
                     className="h-0"
                     onClick={() => {
                       openUpdateModal();
-                      setTransactionSlip(data);
+                      setTransactionSlip(transaction);
                     }}
                   >
                     <svg
@@ -227,7 +234,7 @@ const Transactions = () => {
                     className="h-0"
                     onClick={() => {
                       openDeleteModal();
-                      setTransactionSlip(data);
+                      setTransactionSlip(transaction);
                     }}
                   >
                     <svg
