@@ -86,7 +86,7 @@ const updateTransaction = async (req, res) => {
       account_number,
       service_fee: Number(service_fee),
       sub_total: Number(sub_total),
-      total: service_fee + sub_total,
+      total: Number(service_fee) + Number(sub_total),
     });
 
     if (!updatedTransaction) {

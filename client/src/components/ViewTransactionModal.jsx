@@ -1,5 +1,5 @@
 import Modal from "./Modal";
-
+import PropTypes from "prop-types";
 const ViewTransactionModal = ({ modalOpen, closeModal, transaction_slip }) => {
   console.log(transaction_slip);
   return (
@@ -47,4 +47,7 @@ const ViewTransactionModal = ({ modalOpen, closeModal, transaction_slip }) => {
   );
 };
 
+ViewTransactionModal.propTypes = {
+  transaction_slip: PropTypes.object.isRequired,
+};
 export default ViewTransactionModal;

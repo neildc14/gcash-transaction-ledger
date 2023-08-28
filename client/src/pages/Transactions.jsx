@@ -1,21 +1,23 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import fetchTransactions from "../services/fetchTransactions";
+import PropTypes from "prop-types";
 import ViewTransactionModal from "../components/ViewTransactionModal";
 import UpdateTransactionModal from "../components/UpdateTransactionModal";
 import DeleteTransactionModal from "../components/DeleteTransactionModal";
+import TransactionRequest from "../services/transactionRequest";
 
 const Transactions = () => {
   const [transaction_results, setTransactionResults] = useState([]);
   const [transaction_slip, setTransactionSlip] = useState({});
+  const transactionRequest = new TransactionRequest();
 
   const {
     data: transactions_data,
     error,
     isError,
   } = useQuery({
-    queryKey: ["transactions"],
-    queryFn: fetchTransactions,
+    queryKey: [import.meta.env.VITE_REACT_APP_TRANSACTION_KEY],
+    queryFn: () => transactionRequest.getAllTransactions(),
   });
 
   useEffect(() => {
@@ -271,6 +273,7 @@ const Transactions = () => {
       <UpdateTransactionModal
         transaction_slip={transaction_slip}
         modalOpen={modalUpdateOpen}
+        setTransactionSlip={setTransactionSlip}
         closeModal={closeUpdateModal}
       />
       <DeleteTransactionModal
@@ -280,6 +283,11 @@ const Transactions = () => {
       />
     </>
   );
+};
+
+UpdateTransactionModal.propTypes = {
+  modalOpen: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
 };
 
 export default Transactions;

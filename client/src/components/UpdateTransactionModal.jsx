@@ -1,10 +1,55 @@
 import Modal from "./Modal";
+import PropTypes from "prop-types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import TransactionRequest from "../services/transactionRequest";
 
-const UpdateTransactionModal = ({ modalOpen, closeModal }) => {
+const UpdateTransactionModal = ({
+  modalOpen,
+  closeModal,
+  transaction_slip,
+  setTransactionSlip,
+}) => {
+  const queryClient = useQueryClient();
+  const transactionRequest = new TransactionRequest();
+  const transactionMutation = useMutation({
+    mutationFn: (updatedTransaction) => {
+      transactionRequest.updateTransaction(
+        updatedTransaction,
+        transaction_slip?._id
+      );
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(
+        import.meta.env.VITE_REACT_APP_TRANSACTION_KEY
+      );
+    },
+  });
+
+  const onHandleUpdateTransaction = (updatedTransactionEvent) => {
+    updatedTransactionEvent.preventDefault();
+    const { name, value } = updatedTransactionEvent.target;
+    setTransactionSlip((prevTransactionSlip) => ({
+      ...prevTransactionSlip,
+      [name]: value,
+    }));
+  };
+
+  const onSubmitTransaction = (transactionEvent) => {
+    transactionEvent.preventDefault();
+    const formData = new FormData(transactionEvent.currentTarget);
+    const transactionData = Object.fromEntries(formData);
+    transactionMutation.mutate(transactionData);
+    closeModal();
+  };
+
   return (
     <Modal isOpen={modalOpen} onClose={closeModal}>
       <h2 className="text-lg font-semibold mb-4">Update Transaction</h2>
-      <form action="" className="flex flex-col gap-4">
+      <form
+        action=""
+        className="flex flex-col gap-4"
+        onSubmit={onSubmitTransaction}
+      >
         <div className="flex flex-col gap-2">
           <label
             htmlFor="transaction_type"
@@ -15,6 +60,8 @@ const UpdateTransactionModal = ({ modalOpen, closeModal }) => {
           <select
             name="transaction_type"
             id=""
+            value={transaction_slip?.transaction_type}
+            onChange={onHandleUpdateTransaction}
             className="p-2 rounded-md active:outline focus:outline-blue-500 border-b-2 shadow-sm "
             required
           >
@@ -33,6 +80,8 @@ const UpdateTransactionModal = ({ modalOpen, closeModal }) => {
           <input
             type="text"
             name="customer"
+            value={transaction_slip?.customer}
+            onChange={onHandleUpdateTransaction}
             required
             className="p-2 rounded-md active:outline focus:outline-blue-500 border-b-2 shadow-sm"
           />
@@ -48,6 +97,8 @@ const UpdateTransactionModal = ({ modalOpen, closeModal }) => {
             type="text"
             name="account_number"
             required
+            value={transaction_slip?.account_number}
+            onChange={onHandleUpdateTransaction}
             className="p-2 rounded-md active:outline focus:outline-blue-500 border-b-2 shadow-sm"
           />
         </div>
@@ -61,6 +112,8 @@ const UpdateTransactionModal = ({ modalOpen, closeModal }) => {
           <input
             type="number"
             name="sub_total"
+            value={transaction_slip?.sub_total}
+            onChange={onHandleUpdateTransaction}
             required
             className="p-2 rounded-md active:outline focus:outline-blue-500 border-b-2 shadow-sm"
           />
@@ -75,16 +128,24 @@ const UpdateTransactionModal = ({ modalOpen, closeModal }) => {
           <input
             type="number"
             name="service_fee"
+            value={transaction_slip?.service_fee}
+            onChange={onHandleUpdateTransaction}
             required
             className="p-2 rounded-md active:outline focus:outline-blue-500 border-b-2 shadow-sm"
           />
         </div>
         <button className="mt-4 p-2 rounded-md active:outline focus:outline-blue-500 border-b-2 shadow-sm bg-blue-500 text-slate-50 font-semibold text-xl">
-          Add Transaction
+          Update Transaction
         </button>
       </form>
     </Modal>
   );
 };
 
+UpdateTransactionModal.propTypes = {
+  modalOpen: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  setTransactionSlip: PropTypes.func.isRequired,
+  transaction_slip: PropTypes.object.isRequired,
+};
 export default UpdateTransactionModal;
