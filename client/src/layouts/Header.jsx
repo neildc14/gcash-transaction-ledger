@@ -4,7 +4,6 @@ import { useState } from "react";
 const Header = () => {
   const [toggled, setToggle] = useState(false);
   const toggleSideBar = () => {
-    console.log("toggle");
     setToggle(!toggled);
   };
   return (
@@ -17,6 +16,7 @@ const Header = () => {
           <div className="hidden md:block">
             <HorizontalNavBar />
           </div>
+          
           <div onClick={toggleSideBar} className="block md:hidden">
             {!toggled ? (
               <svg
@@ -55,6 +55,12 @@ const Header = () => {
   );
 };
 
+const navigationLinks = [
+  { href: "/dashboard", text: "My Dashboard" },
+  { href: "/add-transaction", text: "Add Transaction" },
+  { href: "/transactions", text: "All Transactions" },
+];
+
 function NavigationLink({ href, text }) {
   return (
     <a
@@ -70,9 +76,9 @@ function SideBar() {
   return (
     <div className="h-screen bg-blue-500 z-10 transition ease-out duration-500">
       <nav className="pt-40 flex justify-center items-center flex-col gap-4">
-        <NavigationLink href="/add-transaction" text="My Dashboard" />
-        <NavigationLink href="/add-transaction" text="Add Transaction" />
-        <NavigationLink href="/transactions" text="All Transactions" />
+        {navigationLinks.map((link) => (
+          <NavigationLink key={link.href} href={link.href} text={link.text} />
+        ))}
       </nav>
     </div>
   );
@@ -81,9 +87,9 @@ function SideBar() {
 function HorizontalNavBar() {
   return (
     <nav className="flex justify-center items-center flex-row gap-6">
-      <NavigationLink href="/add-transaction" text="My Dashboard" />
-      <NavigationLink href="/add-transaction" text="Add Transaction" />
-      <NavigationLink href="/transactions" text="All Transactions" />
+      {navigationLinks.map((link) => (
+        <NavigationLink key={link.href} href={link.href} text={link.text} />
+      ))}
     </nav>
   );
 }
