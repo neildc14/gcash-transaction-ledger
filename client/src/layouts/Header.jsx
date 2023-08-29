@@ -20,7 +20,7 @@ const Header = () => {
               <img src={logo} alt="this is logo" className="h-8 w-8" />
             </div>
             <div className="hidden md:block">
-              <HorizontalNavBar />
+              <NavBar />
             </div>
 
             <div onClick={toggleSideBar} className="block md:hidden">
@@ -28,7 +28,7 @@ const Header = () => {
             </div>
           </div>
         </header>
-        {toggled && <SideBar />}
+        <div className="md:hidden">{toggled && <SideBar />}</div>
       </ToggleSidebarContext.Provider>
     </>
   );
@@ -57,25 +57,21 @@ function NavigationLink({ href, text }) {
   );
 }
 
-function SideBar() {
+function NavBar() {
   return (
-    <div className="h-screen bg-blue-500 z-10 transition ease-out duration-500">
-      <nav className="pt-40 flex justify-center items-center flex-col gap-4">
-        {navigationLinks.map((link) => (
-          <NavigationLink key={link.href} href={link.href} text={link.text} />
-        ))}
-      </nav>
-    </div>
-  );
-}
-
-function HorizontalNavBar() {
-  return (
-    <nav className="flex justify-center items-center flex-row gap-6">
+    <nav className="pt-40 md:pt-0 flex justify-center items-center flex-col md:flex-row gap-4 md:gap-6">
       {navigationLinks.map((link) => (
         <NavigationLink key={link.href} href={link.href} text={link.text} />
       ))}
     </nav>
+  );
+}
+
+function SideBar() {
+  return (
+    <div className="h-screen bg-blue-500 z-10 transition ease-out duration-500">
+      <NavBar />
+    </div>
   );
 }
 
