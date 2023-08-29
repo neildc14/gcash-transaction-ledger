@@ -14,7 +14,10 @@ const Header = () => {
           <div>
             <img src={logo} alt="this is logo" className="h-8 w-8" />
           </div>
-          <div onClick={toggleSideBar}>
+          <div className="hidden md:block">
+            <HorizontalNavBar />
+          </div>
+          <div onClick={toggleSideBar} className="block md:hidden">
             {!toggled ? (
               <svg
                 width={40}
@@ -52,27 +55,36 @@ const Header = () => {
   );
 };
 
+function NavigationLink({ href, text }) {
+  return (
+    <a
+      href={href}
+      className="text-xl md:text-base text-slate-50 md:text-slate-500 md:hover:text-blue-500 font-medium"
+    >
+      {text}
+    </a>
+  );
+}
+
 function SideBar() {
   return (
-    <div className="h-screen  bg-blue-500 z-10 transition ease-out  duration-500 ">
+    <div className="h-screen bg-blue-500 z-10 transition ease-out duration-500">
       <nav className="pt-40 flex justify-center items-center flex-col gap-4">
-        <a
-          href="/add-transaction"
-          className="text-xl text-slate-50 font-medium "
-        >
-          My Dashboard
-        </a>
-        <a
-          href="/add-transaction"
-          className="text-xl text-slate-50 font-medium"
-        >
-          Add Transaction
-        </a>
-        <a href="/transactions" className="text-xl text-slate-50 font-medium">
-          All Transactions
-        </a>
+        <NavigationLink href="/add-transaction" text="My Dashboard" />
+        <NavigationLink href="/add-transaction" text="Add Transaction" />
+        <NavigationLink href="/transactions" text="All Transactions" />
       </nav>
     </div>
+  );
+}
+
+function HorizontalNavBar() {
+  return (
+    <nav className="flex justify-center items-center flex-row gap-6">
+      <NavigationLink href="/add-transaction" text="My Dashboard" />
+      <NavigationLink href="/add-transaction" text="Add Transaction" />
+      <NavigationLink href="/transactions" text="All Transactions" />
+    </nav>
   );
 }
 
