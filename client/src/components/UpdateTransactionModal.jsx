@@ -27,9 +27,6 @@ const UpdateTransactionModal = ({
       ]);
       closeModal();
     },
-    onSettled: (response) => {
-      console.log(response);
-    },
   });
 
   const onHandleUpdateTransaction = (updatedTransactionEvent) => {
