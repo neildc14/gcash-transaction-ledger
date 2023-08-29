@@ -6,6 +6,12 @@ import ViewTransactionModal from "../components/ViewTransactionModal";
 import UpdateTransactionModal from "../components/UpdateTransactionModal";
 import DeleteTransactionModal from "../components/DeleteTransactionModal";
 import TransactionRequest from "../services/transactionRequest";
+import {
+  DeleteIcon,
+  MoneyIcon,
+  UpdateIcon,
+  ViewIcon,
+} from "../components/SGVIcons";
 
 const Transactions = () => {
   const [transaction_results, setTransactionResults] = useState([]);
@@ -48,26 +54,20 @@ const Transactions = () => {
     }
   }, [location, filterByTabMenu, transactions_data]);
 
-  const clickTabeMenu = (e) => {
-    const tabValue = e.target.value.toLocaleLowerCase();
+  const clickTabeMenu = (tabEvent) => {
+    const tabValue = tabEvent.target.value.toLocaleLowerCase();
 
     switch (tabValue) {
       case "all":
-        setTransactionResults(transactions_data);
-        break;
+        return setTransactionResults(transactions_data);
       case "cash-in":
-        setTransactionResults(filterByTabMenu(tabValue));
-        break;
+        return setTransactionResults(filterByTabMenu(tabValue));
       case "cash-out":
-        setTransactionResults(filterByTabMenu(tabValue));
-        break;
+        return setTransactionResults(filterByTabMenu(tabValue));
       case "bank-transfer":
-        setTransactionResults(filterByTabMenu(tabValue));
-        break;
-
+        return setTransactionResults(filterByTabMenu(tabValue));
       default:
-        null;
-        break;
+        return null;
     }
   };
 
@@ -124,19 +124,7 @@ const Transactions = () => {
             <h2 className="text-xl font-semibold text-slate-50">
               GCash Transactions
             </h2>
-            <svg
-              width={66}
-              height={66}
-              fill="#fcfcfc"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M4.8 4.8a2.4 2.4 0 0 0-2.4 2.4V12a2.4 2.4 0 0 0 2.4 2.4V7.2h12a2.4 2.4 0 0 0-2.4-2.4H4.8ZM7.2 12a2.4 2.4 0 0 1 2.4-2.4h9.6a2.4 2.4 0 0 1 2.4 2.4v4.8a2.4 2.4 0 0 1-2.4 2.4H9.6a2.4 2.4 0 0 1-2.4-2.4V12Zm7.2 4.8a2.4 2.4 0 1 0 0-4.8 2.4 2.4 0 0 0 0 4.8Z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <MoneyIcon />
           </div>
         </div>
         <div className="pt-4 flex justify-evenly">
@@ -210,20 +198,7 @@ const Transactions = () => {
                       setTransactionSlip(transaction);
                     }}
                   >
-                    <svg
-                      width={25}
-                      height={25}
-                      fill="none"
-                      stroke="#484747"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M14.121 14.121A3 3 0 1 0 9.88 9.88a3 3 0 0 0 4.242 4.242Z" />
-                      <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7Z" />
-                    </svg>
+                    <ViewIcon />
                   </button>
                   <button
                     className="h-0"
@@ -232,19 +207,7 @@ const Transactions = () => {
                       setTransactionSlip(transaction);
                     }}
                   >
-                    <svg
-                      width={25}
-                      height={25}
-                      fill="none"
-                      stroke="#484747"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="m15.232 5.232 3.536 3.536m-2.036-5.036a2.5 2.5 0 0 1 3.536 3.536L6.5 21.036H3v-3.572L16.732 3.732Z" />
-                    </svg>
+                    <UpdateIcon />
                   </button>
                   <button
                     className="h-0"
@@ -253,19 +216,7 @@ const Transactions = () => {
                       setTransactionSlip(transaction);
                     }}
                   >
-                    <svg
-                      width={25}
-                      height={25}
-                      fill="none"
-                      stroke="#484747"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M10 11v6m4-6v6M4 7h16m-1 0-.867 12.142A2 2 0 0 1 16.138 21H7.862a2 2 0 0 1-1.995-1.858L5 7h14Zm-4 0V4a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v3h6Z" />
-                    </svg>
+                    <DeleteIcon />
                   </button>
                 </div>
               </div>

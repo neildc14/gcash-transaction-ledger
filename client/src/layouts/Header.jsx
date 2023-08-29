@@ -1,6 +1,7 @@
 import logo from "../assets/images/cropped.png";
 import { useState, useContext, createContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { CloseIcon, HamburgerMenuIcon } from "../components/SGVIcons";
 
 const ToggleSidebarContext = createContext(null);
 
@@ -23,35 +24,7 @@ const Header = () => {
             </div>
 
             <div onClick={toggleSideBar} className="block md:hidden">
-              {!toggled ? (
-                <svg
-                  width={40}
-                  height={40}
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M3.6 6a1.2 1.2 0 0 1 1.2-1.2h14.4a1.2 1.2 0 1 1 0 2.4H4.8A1.2 1.2 0 0 1 3.6 6Zm0 6a1.2 1.2 0 0 1 1.2-1.2h14.4a1.2 1.2 0 1 1 0 2.4H4.8A1.2 1.2 0 0 1 3.6 12Zm0 6a1.2 1.2 0 0 1 1.2-1.2h14.4a1.2 1.2 0 1 1 0 2.4H4.8A1.2 1.2 0 0 1 3.6 18Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  width={40}
-                  height={40}
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="m6 6 12 12M6 18 18 6 6 18Z" />
-                </svg>
-              )}
+              {!toggled ? <HamburgerMenuIcon /> : <CloseIcon />}
             </div>
           </div>
         </header>
