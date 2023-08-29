@@ -1,5 +1,12 @@
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 const DashboardCard = ({ title, value }) => {
+  const navigateToTransactions = useNavigate();
+
+  const handleNavigateClick = () => {
+    navigateToTransactions("/transactions");
+  };
+
   return (
     <div className="px-6 py-8  flex justify-between items-center rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 ">
       <div>
@@ -10,7 +17,10 @@ const DashboardCard = ({ title, value }) => {
           {value}
         </h2>
       </div>
-      <button className="inline-flex items-center  gap-2 text-lg font-semibold text-blue-50 border rounded-md py-2 px-6 hover:bg-blue-600 hover:border-blue-500">
+      <button
+        className="inline-flex items-center  gap-2 text-lg font-semibold text-blue-50 border rounded-md py-2 px-6 hover:bg-blue-600 hover:border-blue-500"
+        onClick={handleNavigateClick}
+      >
         See All{" "}
         <svg
           width={30}
