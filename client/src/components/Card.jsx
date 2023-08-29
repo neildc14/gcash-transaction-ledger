@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-const DashboardCard = ({ title, value }) => {
+const DashboardCard = ({ type, title, value }) => {
   const navigateToTransactions = useNavigate();
 
   const handleNavigateClick = () => {
-    navigateToTransactions("/transactions");
+    navigateToTransactions("/transactions", { state: type });
   };
 
   return (
@@ -45,6 +45,7 @@ const DashboardCard = ({ title, value }) => {
 DashboardCard.propTypes = {
   title: PropTypes.string.isRequired,
   value: PropTypes.number.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default DashboardCard;

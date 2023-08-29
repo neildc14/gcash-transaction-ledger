@@ -35,10 +35,14 @@ const getAllTotal = async (req, res) => {
     }
 
     const totalTransactions = [
-      { type: "Overall", total: total },
-      { type: "Total Cash-In", total: totalCashIn },
-      { type: "Total Cash-Out", total: totalCashOut },
-      { type: "Total Bank-Transfer", total: totalBankTransfer },
+      { title: "Overall", type: "all", total: total },
+      { title: "Total Cash-In", type: "cash-in", total: totalCashIn },
+      { title: "Total Cash-Out", type: "cash-out", total: totalCashOut },
+      {
+        title: "Total Bank-Transfer",
+        type: "bank-transfer",
+        total: totalBankTransfer,
+      },
     ];
 
     res.status(200).json(totalTransactions);

@@ -16,7 +16,8 @@ const Dashboard = () => {
         {totalTransactions?.map((transaction) => (
           <DashboardCard
             key={transaction.type}
-            title={transaction.type}
+            type={transaction.type}
+            title={transaction.title}
             value={transaction.total}
           />
         ))}

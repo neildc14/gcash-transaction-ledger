@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import PropTypes from "prop-types";
+import { useLocation } from "react-router-dom";
 import ViewTransactionModal from "../components/ViewTransactionModal";
 import UpdateTransactionModal from "../components/UpdateTransactionModal";
 import DeleteTransactionModal from "../components/DeleteTransactionModal";
@@ -10,6 +11,7 @@ const Transactions = () => {
   const [transaction_results, setTransactionResults] = useState([]);
   const [transaction_slip, setTransactionSlip] = useState({});
   const transactionRequest = new TransactionRequest();
+  const location = useLocation();
 
   const {
     data: transactions_data,
@@ -20,11 +22,31 @@ const Transactions = () => {
     queryFn: () => transactionRequest.getAllTransactions(),
   });
 
+  const filterByTabMenu = useCallback(
+    function (tabValue) {
+      return transactions_data?.filter(
+        (transaction) =>
+          transaction.transaction_type === tabValue.toLocaleLowerCase()
+      );
+    },
+    [transactions_data]
+  );
+
   useEffect(() => {
     setTransactionResults(transactions_data);
   }, [transactions_data]);
 
-  console.log({ transactions_data });
+  useEffect(() => {
+    if (location.state === "all") {
+      setTransactionResults(transactions_data);
+      return;
+    }
+
+    if (location.state !== null) {
+      const filteredResults = filterByTabMenu(location.state);
+      setTransactionResults(filteredResults);
+    }
+  }, [location, filterByTabMenu, transactions_data]);
 
   const clickTabeMenu = (e) => {
     const tabValue = e.target.value.toLocaleLowerCase();
@@ -49,21 +71,11 @@ const Transactions = () => {
     }
   };
 
-  function filterByTabMenu(tabValue) {
-    return transactions_data?.filter(
-      (transaction) =>
-        transaction.transaction_type === tabValue.toLocaleLowerCase()
-    );
-  }
-
   const searchTransaction = (searchEvent) => {
     searchEvent.preventDefault();
     const searchValue = searchEvent.target.value;
-
-    // Remove spaces from the search value
     const searchWithoutSpaces = searchValue.replace(/\s+/g, "");
 
-    // Create a pattern that allows for partial matches
     const pattern = searchWithoutSpaces
       .split("")
       .map((char) => `${char}.*`)
