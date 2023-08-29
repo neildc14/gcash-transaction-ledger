@@ -1,5 +1,3 @@
-import React from "react";
-
 const DashboardCard = ({ title, value }) => {
   return (
     <div className="px-6 py-8  flex justify-between items-center rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 ">
