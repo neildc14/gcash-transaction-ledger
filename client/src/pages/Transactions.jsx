@@ -24,6 +24,8 @@ const Transactions = () => {
     setTransactionResults(transactions_data);
   }, [transactions_data]);
 
+  console.log({ transactions_data });
+
   const clickTabeMenu = (e) => {
     const tabValue = e.target.value.toLocaleLowerCase();
 
@@ -183,7 +185,7 @@ const Transactions = () => {
                     {transaction.transaction_type.toLocaleUpperCase()}
                   </p>
                   <p className=" text-base text-slate-500">
-                    {" "}
+                    <span>&#8369;</span>
                     {transaction.total}
                   </p>
                 </div>

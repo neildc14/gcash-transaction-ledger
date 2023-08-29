@@ -18,11 +18,17 @@ const UpdateTransactionModal = ({
         transaction_slip?._id
       );
     },
+    onError: (error) => {
+      console.log(error);
+    },
     onSuccess: () => {
-      queryClient.invalidateQueries(
-        import.meta.env.VITE_REACT_APP_TRANSACTION_KEY
-      );
+      queryClient.invalidateQueries([
+        import.meta.env.VITE_REACT_APP_TRANSACTION_KEY,
+      ]);
       closeModal();
+    },
+    onSettled: (response) => {
+      console.log(response);
     },
   });
 

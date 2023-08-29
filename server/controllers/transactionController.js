@@ -9,7 +9,7 @@ const getAllTransactions = async (req, res) => {
       const error = { message: "No Transactions found!" };
       throw error;
     }
-    console.log(transactions.length);
+
     res.status(200).json(transactions);
   } catch (error) {
     res.status(400).json(error);
@@ -52,7 +52,7 @@ const postTransaction = async (req, res) => {
       account_number,
       service_fee: Number(service_fee),
       sub_total: Number(sub_total),
-      total: service_fee + sub_total,
+      total: Number(service_fee) + Number(sub_total),
     });
 
     if (!newTransaction) {
@@ -80,21 +80,26 @@ const updateTransaction = async (req, res) => {
       throw error;
     }
 
-    const updatedTransaction = await Transaction.findOneAndUpdate(filter, {
-      transaction_type,
-      customer: customer,
-      account_number,
-      service_fee: Number(service_fee),
-      sub_total: Number(sub_total),
-      total: Number(service_fee) + Number(sub_total),
-    });
+    const updatedTransaction = await Transaction.findOneAndUpdate(
+      filter,
+      {
+        transaction_type,
+        customer: customer,
+        account_number,
+        service_fee: Number(service_fee),
+        sub_total: Number(sub_total),
+        total: Number(service_fee) + Number(sub_total),
+      },
+      { new: true }
+    );
 
+    console.log({ updatedTransaction });
     if (!updatedTransaction) {
       error = { message: "Failed to update transaction" };
       throw error;
     }
 
-    res.status(200).json(updatedTransaction);
+    res.status(201).json(updatedTransaction);
   } catch (error) {
     res.status(400).json(error);
   }

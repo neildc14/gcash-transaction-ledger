@@ -14,10 +14,11 @@ const DeleteTransactionModal = ({
   const transactionMutation = useMutation({
     mutationFn: (transaction_id) =>
       transactionRequest.deleteTransaction(transaction_id),
-    onSuccess: () => {
+    onSuccess: (response) => {
       queryClient.invalidateQueries(
         import.meta.env.VITE_REACT_APP_TRANSACTION_KEY
       );
+      console.log(response, "INVALIDATED");
       closeModal();
     },
   });

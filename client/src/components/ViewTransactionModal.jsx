@@ -1,7 +1,6 @@
 import Modal from "./Modal";
 import PropTypes from "prop-types";
 const ViewTransactionModal = ({ modalOpen, closeModal, transaction_slip }) => {
-  console.log(transaction_slip);
   return (
     <Modal isOpen={modalOpen} onClose={closeModal}>
       <h2 className="text-xl font-semibold mb-4">
@@ -26,15 +25,26 @@ const ViewTransactionModal = ({ modalOpen, closeModal, transaction_slip }) => {
         </p>
         <p className="py-1 text-lg">
           <span className="font-semibold "> Sub Total: </span>
-          <span className="text-gray-600">{transaction_slip?.sub_total}</span>
+          <span className="text-gray-600">
+            {" "}
+            <span>&#8369;</span>
+            {transaction_slip?.sub_total}
+          </span>
         </p>
         <p className="py-1 text-lg">
           <span className="font-semibold "> Service Fee: </span>
-          <span className="text-gray-600">{transaction_slip?.service_fee}</span>
+          <span className="text-gray-600">
+            {" "}
+            <span>&#8369;</span>
+            {transaction_slip?.service_fee}
+          </span>
         </p>
         <p className="py-1 text-lg">
           <span className="font-semibold "> Total: </span>
-          <span className="text-gray-600">{transaction_slip?.total}</span>
+          <span className="text-gray-600">
+            <span>&#8369;</span>
+            {transaction_slip?.total}
+          </span>
         </p>
         <button
           className="mt-4 p-2 w-full rounded-md active:outline focus:outline-blue-500 border-b-2 shadow-sm bg-blue-500 text-slate-50 font-semibold text-xl"
