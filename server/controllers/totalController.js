@@ -29,7 +29,7 @@ const getAllTotal = async (req, res) => {
       calculateTotalsPerTransactionType(allTransactions);
 
     const overallTotal = allTransactions.reduce(
-      (acc, transaction) => acc + transaction.total,
+      (acc, transaction) => acc + transaction.sub_total,
       0
     );
     const overallProfit = allTransactions.reduce(
