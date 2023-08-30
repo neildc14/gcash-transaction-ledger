@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import TransactionRequest from "../services/transactionRequest";
-import { ArrowLeftIcon } from "../components/SGVIcons";
+import { ArrowLeftIcon, CloseIcon } from "../components/SGVIcons";
 
 const AddTransaction = () => {
   const [isSuccessful, setSuccessful] = useState(false);
@@ -39,19 +39,7 @@ const AddTransaction = () => {
       <div className="mx-2 p-4 flex justify-between items-center bg-violet-500 text-slate-50">
         <span>Successfully added transaction. </span>
         <button onClick={closeMessage}>
-          <svg
-            width={15}
-            height={15}
-            fill="none"
-            stroke="#fcfcfc"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="m6 6 12 12M6 18 18 6 6 18Z" />
-          </svg>
+          <CloseIcon width={15} height={15} />
         </button>
       </div>
     );

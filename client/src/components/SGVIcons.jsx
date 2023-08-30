@@ -89,11 +89,11 @@ export const HamburgerMenuIcon = () => {
   );
 };
 
-export const CloseIcon = () => {
+export const CloseIcon = ({ width = 40, height = 40 }) => {
   return (
     <svg
-      width={40}
-      height={40}
+      width={width}
+      height={height}
       fill="none"
       stroke="currentColor"
       strokeLinecap="round"
