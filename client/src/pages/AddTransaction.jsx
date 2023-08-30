@@ -38,11 +38,18 @@ const AddTransaction = () => {
     setSuccessful(false);
   };
 
+  const getFieldConfig = (attribute, textContent) => {
+    return {
+      attribute,
+      textContent,
+    };
+  };
+
   const formFieldsAttributes = [
-    { attribute: "customer", textContent: "Customer" },
-    { attribute: "account_number", textContent: "Account Number" },
-    { attribute: "sub_total", textContent: "Sub Total" },
-    { attribute: "service_fee", textContent: "Service Fee" },
+    getFieldConfig("customer", "Customer"),
+    getFieldConfig("account_number", "Account Number"),
+    getFieldConfig("sub_total", "Sub Total"),
+    getFieldConfig("service_fee", "Service Fee"),
   ];
 
   const showSuccessfulMessage = () => {
