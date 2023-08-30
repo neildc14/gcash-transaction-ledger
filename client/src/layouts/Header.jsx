@@ -36,6 +36,7 @@ const Header = () => {
 };
 
 const navigationLinks = [
+  { href: "/login", text: "Login" },
   { href: "/dashboard", text: "My Dashboard" },
   { href: "/add-transaction", text: "Add Transaction" },
   { href: "/transactions", text: "All Transactions" },
