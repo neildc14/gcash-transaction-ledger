@@ -8,6 +8,7 @@ require("dotenv").config();
 const transactions = require("./routes/transactions");
 const customers = require("./routes/customer");
 const total = require("./routes/total");
+const users = require("./routes/users");
 
 //middlewares
 app.use(cors({ origin: "*" }));
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api/transactions", transactions);
 app.use("/api/customers", customers);
 app.use("/api/total", total);
+app.use("/api/auth", users);
 
 mongoose.set("strictQuery", true);
 mongoose.connect(process.env.MONGODB_URI, {

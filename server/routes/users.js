@@ -1,32 +1,10 @@
-const validator = require("validator");
+const express = require("express");
+const router = express.Router();
+const { signUp, logIn } = require("../controllers/UserController");
+const validateUserInput = require("../middlewares/input-validator");
+const corsHeaders = require("../middlewares/headers");
 
-const validateUserInput = (req, res, next) => {
-  const validationErrors = validateBody(req.body);
+router.post("/signup", corsHeaders, validateUserInput, signUp);
+router.post("/login", corsHeaders, logIn);
 
-  if (validationErrors.length > 0) {
-    console.log("error");
-    return res.status(400).json({ validationErrors });
-  } else if (validationErrors.length === 0) {
-    console.log("next", validationErrors.length, validationErrors);
-    next();
-  }
-};
-
-function validateBody(body) {
-  const validationErrors = [];
-
-  if (!body.email || !validator.isEmail(body.email)) {
-    validationErrors.push({ field: "email", message: "Invalid email address" });
-  }
-
-  if (!body.password || body.password.length < 8) {
-    validationErrors.push({
-      field: "password",
-      message: "Password must be at least 8 characters long",
-    });
-  }
-
-  return validationErrors;
-}
-
-module.exports = validateUserInput;
+module.exports = router;
