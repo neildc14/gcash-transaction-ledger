@@ -1,48 +1,57 @@
 const TransactionModel = require("../models/TransactionModel");
+const TRANSACTION_TYPES = {
+  CASH_IN: "cash-in",
+  CASH_OUT: "cash-out",
+  BANK_TRANSFER: "bank-transfer",
+};
 
-const getAllTotal = async (req, res) => {
-  let total = 0;
-  let totalCashIn = 0;
-  let totalCashOut = 0;
-  let totalBankTransfer = 0;
+const calculateTotalsPerTransactionType = (transactions) => {
+  const totals = {
+    [TRANSACTION_TYPES.CASH_IN]: { total: 0, profit: 0 },
+    [TRANSACTION_TYPES.CASH_OUT]: { total: 0, profit: 0 },
+    [TRANSACTION_TYPES.BANK_TRANSFER]: { total: 0, profit: 0 },
+  };
 
-  function totalPerTransactionType(transaction_type, value) {
-    switch (transaction_type) {
-      case "cash-in":
-        totalCashIn += value;
-        break;
-      case "cash-out":
-        totalCashOut += value;
-        break;
-      case "bank-transfer":
-        totalBankTransfer += value;
-        break;
-    }
+  for (const transaction of transactions) {
+    const type = transaction.transaction_type;
+    totals[type].total += transaction.sub_total;
+    totals[type].profit += transaction.service_fee;
   }
 
+  return totals;
+};
+
+const getAllTotal = async (req, res) => {
   try {
     const allTransactions = await TransactionModel.find();
 
-    if (allTransactions.length > 0) {
-      for (let i = 0; i < allTransactions.length; i++) {
-        total += allTransactions[i]["total"];
+    const transactionTypeTotals =
+      calculateTotalsPerTransactionType(allTransactions);
 
-        totalPerTransactionType(
-          allTransactions[i]["transaction_type"],
-          allTransactions[i]["total"]
-        );
-      }
-    }
+    const overallTotal = allTransactions.reduce(
+      (acc, transaction) => acc + transaction.total,
+      0
+    );
+    const overallProfit = allTransactions.reduce(
+      (acc, transaction) => acc + transaction.service_fee,
+      0
+    );
 
     const totalTransactions = [
-      { title: "Overall", type: "all", total: total },
-      { title: "Total Cash-In", type: "cash-in", total: totalCashIn },
-      { title: "Total Cash-Out", type: "cash-out", total: totalCashOut },
       {
-        title: "Total Bank-Transfer",
-        type: "bank-transfer",
-        total: totalBankTransfer,
+        title: "Overall",
+        type: "all",
+        total: overallTotal,
+        profit: overallProfit,
       },
+      ...Object.entries(transactionTypeTotals).map(
+        ([type, { total, profit }]) => ({
+          title: type.charAt(0).toUpperCase() + type.slice(1).replace("-", " "),
+          type: type,
+          total: total,
+          profit: profit,
+        })
+      ),
     ];
 
     res.status(200).json(totalTransactions);

@@ -12,15 +12,12 @@ const Dashboard = () => {
   return (
     <main className="pt-4 h-screen ">
       <div className="mx-2">
-        <h2 className="mb-4 text-xl font-bold text-slate-700">Dashboard</h2>
+        <h2 className="mb-4 text-xl font-bold text-slate-700">
+          Dashboard Overview
+        </h2>
         <div className="flex flex-col md:flex-row md:justify-between gap-4">
           {totalTransactions?.map((transaction) => (
-            <DashboardCard
-              key={transaction.type}
-              type={transaction.type}
-              title={transaction.title}
-              value={transaction.total}
-            />
+            <DashboardCard key={transaction.type} transaction={transaction} />
           ))}
         </div>
       </div>
