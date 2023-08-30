@@ -11,16 +11,18 @@ const Dashboard = () => {
 
   return (
     <main className="pt-4 h-screen ">
-      <div className="mx-2 flex flex-col gap-4">
-        <h2 className="text-xl font-bold text-slate-700">Dashboard</h2>
-        {totalTransactions?.map((transaction) => (
-          <DashboardCard
-            key={transaction.type}
-            type={transaction.type}
-            title={transaction.title}
-            value={transaction.total}
-          />
-        ))}
+      <div className="mx-2">
+        <h2 className="mb-4 text-xl font-bold text-slate-700">Dashboard</h2>
+        <div className="flex flex-col md:flex-row md:justify-between gap-4">
+          {totalTransactions?.map((transaction) => (
+            <DashboardCard
+              key={transaction.type}
+              type={transaction.type}
+              title={transaction.title}
+              value={transaction.total}
+            />
+          ))}
+        </div>
       </div>
     </main>
   );

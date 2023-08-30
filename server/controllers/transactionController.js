@@ -77,7 +77,7 @@ const updateTransaction = async (req, res) => {
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       error = { message: "Invalid ID" };
-      throw error;
+      throw error;  
     }
 
     const updatedTransaction = await Transaction.findOneAndUpdate(

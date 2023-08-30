@@ -17,7 +17,7 @@ const Transactions = () => {
   const [transaction_results, setTransactionResults] = useState([]);
   const [transaction_slip, setTransactionSlip] = useState({});
   const transactionRequest = new TransactionRequest();
-  const location = useLocation();
+  const transactionsLocation = useLocation();
 
   const {
     data: transactions_data,
@@ -43,16 +43,16 @@ const Transactions = () => {
   }, [transactions_data]);
 
   useEffect(() => {
-    if (location.state === "all") {
+    if (transactionsLocation.state === "all") {
       setTransactionResults(transactions_data);
       return;
     }
 
-    if (location.state !== null) {
-      const filteredResults = filterByTabMenu(location.state);
+    if (transactionsLocation.state !== null) {
+      const filteredResults = filterByTabMenu(transactionsLocation.state);
       setTransactionResults(filteredResults);
     }
-  }, [location, filterByTabMenu, transactions_data]);
+  }, [transactionsLocation, filterByTabMenu, transactions_data]);
 
   const clickTabeMenu = (tabEvent) => {
     const tabValue = tabEvent.target.value.toLocaleLowerCase();
@@ -71,20 +71,24 @@ const Transactions = () => {
     }
   };
 
-  const searchTransaction = (searchEvent) => {
-    searchEvent.preventDefault();
-    const searchValue = searchEvent.target.value;
+  const searchPattern = (searchValue) => {
     const searchWithoutSpaces = searchValue.replace(/\s+/g, "");
-
     const pattern = searchWithoutSpaces
       .split("")
       .map((char) => `${char}.*`)
       .join("");
 
-    const regex = new RegExp(pattern, "i");
+    const regexPattern = new RegExp(pattern, "i");
+    return regexPattern;
+  };
 
-    let searchResults = transactions_data.filter((transaction) =>
-      regex.test(transaction.customer)
+  const searchTransaction = (searchEvent) => {
+    searchEvent.preventDefault();
+    const searchValue = searchEvent.target.value;
+    const regexPattern = searchPattern(searchValue);
+
+    const searchResults = transactions_data.filter((transaction) =>
+      regexPattern.test(transaction.customer)
     );
 
     setTransactionResults(searchResults);
@@ -116,6 +120,8 @@ const Transactions = () => {
     setModalDeleteOpen(false);
   };
 
+  const tabMenus = ["All", "Cash-In", "Cash-Out", "Bank-Transfer"];
+
   return (
     <>
       <main className="pt-4 h-screen ">
@@ -128,30 +134,15 @@ const Transactions = () => {
           </div>
         </div>
         <div className="pt-4 flex justify-evenly">
-          <input
-            type="button"
-            className=" focus:text-blue-600 focus:font-semibold"
-            value="All"
-            onClick={clickTabeMenu}
-          />
-          <input
-            type="button"
-            className=" focus:text-blue-600 focus:font-semibold"
-            value="Cash-in"
-            onClick={clickTabeMenu}
-          />
-          <input
-            type="button"
-            className=" focus:text-blue-600 focus:font-semibold"
-            value="Cash-out"
-            onClick={clickTabeMenu}
-          />
-          <input
-            type="button"
-            className=" focus:text-blue-600 focus:font-semibold"
-            value="Bank-transfer"
-            onClick={clickTabeMenu}
-          />
+          {tabMenus?.map((tabmenu) => (
+            <input
+              key={tabmenu}
+              type="button"
+              className=" focus:text-blue-600 focus:font-semibold"
+              value={tabmenu}
+              onClick={clickTabeMenu}
+            />
+          ))}
         </div>
         <div className="mt-10 w-100 flex gap-4 mx-2">
           <input
