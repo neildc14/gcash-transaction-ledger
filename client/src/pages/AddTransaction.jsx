@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import TransactionRequest from "../services/transactionRequest";
+import { ArrowLeftIcon } from "../components/SGVIcons";
 
 const AddTransaction = () => {
   const [isSuccessful, setSuccessful] = useState(false);
@@ -80,10 +81,10 @@ const AddTransaction = () => {
         </div>
         <div className="py-4">
           <button
-            className=" py-1 px-6 rounded-sm bg-gray-200 text-lg font-semibold"
+            className="inline-flex gap-2 py-1 px-2 rounded-sm bg-gray-200 text-lg font-semibold"
             onClick={goBackToPreviousPage}
           >
-            Back
+            <ArrowLeftIcon /> Back
           </button>
         </div>
         <hr />

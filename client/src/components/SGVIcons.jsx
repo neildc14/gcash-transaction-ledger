@@ -126,3 +126,22 @@ export const ArrowRightIcon = () => {
     </svg>
   );
 };
+
+export const ArrowLeftIcon = () => {
+  return (
+    <svg
+      width={25}
+      height={25}
+      fill="none"
+      stroke="#000000"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M19 12H5" />
+      <path d="m12 19-7-7 7-7" />
+    </svg>
+  );
+};
