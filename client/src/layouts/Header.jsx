@@ -2,13 +2,14 @@ import logo from "../assets/images/cropped.png";
 import { useState, useContext, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { CloseIcon, HamburgerMenuIcon } from "../components/SGVIcons";
+import PropTypes from "prop-types";
 
 const ToggleSidebarContext = createContext(null);
 
 const Header = () => {
   const [toggled, setToggle] = useState(false);
   const toggleSideBar = () => {
-    setToggle(!toggled);
+    setToggle((prevToggle) => !prevToggle);
   };
 
   return (
@@ -75,4 +76,8 @@ function SideBar() {
   );
 }
 
+NavigationLink.propTypes = {
+  href: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+};
 export default Header;
