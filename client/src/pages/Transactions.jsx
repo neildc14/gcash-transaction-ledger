@@ -180,7 +180,7 @@ const Transactions = () => {
                   </p>
                   <p className=" text-base text-slate-500">
                     <span>&#8369;</span>
-                    {transaction.total}
+                    {transaction.total.toLocaleString()}.00
                   </p>
                 </div>
 

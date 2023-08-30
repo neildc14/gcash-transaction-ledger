@@ -15,7 +15,7 @@ const DashboardCard = ({ type, title, value }) => {
         <h2 className="text-xl font-semibold text-slate-50">
           {" "}
           <span>&#8369;</span>
-          {value}
+          {value.toLocaleString()}.00
         </h2>
       </div>
       <button
