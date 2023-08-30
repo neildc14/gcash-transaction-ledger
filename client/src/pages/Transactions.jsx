@@ -138,7 +138,10 @@ const Transactions = () => {
             <input
               key={tabmenu}
               type="button"
-              className=" focus:text-blue-600 focus:font-semibold"
+              className={`${
+                transactionsLocation?.state === tabmenu.toLowerCase() &&
+                "text-blue-600 font-semibold "
+              }focus:text-blue-600 focus:font-semibold`}
               value={tabmenu}
               onClick={clickTabeMenu}
             />
