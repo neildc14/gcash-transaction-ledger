@@ -10,7 +10,7 @@ const DashboardCard = ({ transaction }) => {
   };
 
   return (
-    <div className="px-6 py-8  flex justify-between items-center rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 ">
+    <div className="px-6 py-8  md:w-96 flex justify-between items-center rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 ">
       <div>
         <h2 className="py-2 text-xl font-bold text-white">
           {transaction.title}
@@ -20,7 +20,7 @@ const DashboardCard = ({ transaction }) => {
           <span>&#8369;</span>
           <span>{transaction.total?.toLocaleString()}.00</span>
         </h2>
-        <h2 className="text-xl font-semibold text-slate-50">
+        <h2 className="text-xl flex-wrap font-semibold text-slate-50">
           <span className="pe-2">Profit:</span>
           <span>&#8369;</span>
           <span>{transaction.profit?.toLocaleString()}.00</span>

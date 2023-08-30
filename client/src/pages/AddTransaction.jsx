@@ -57,10 +57,10 @@ const AddTransaction = () => {
   };
 
   return (
-    <main className="pt-4 h-screen ">
+    <main className="pt-4 h-screen md:max-w-4xl md:mx-auto">
       <div className="mx-2">
         <div className="ps-6 py-8 pe-10 flex justify-between items-center rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 ">
-          <h2 className="text-xl font-semibold text-slate-50">
+          <h2 className="text-xl md:text-2xl  font-semibold text-slate-50">
             Add Transaction
           </h2>
 
@@ -68,7 +68,7 @@ const AddTransaction = () => {
         </div>
         <div className="py-4">
           <button
-            className="inline-flex gap-2 py-1 px-2 rounded-sm bg-gray-200 text-lg font-semibold"
+            className="inline-flex gap-2 py-1 px-2 rounded-sm md:rounded-md bg-gray-200 text-lg font-semibold"
             onClick={goBackToPreviousPage}
           >
             <ArrowLeftIcon /> Back
@@ -79,10 +79,10 @@ const AddTransaction = () => {
 
       {isSuccessful && showSuccessfulMessage()}
 
-      <div className="pt-6 mx-8">
+      <div className="pt-6 mx-8 md:max-w-2xl md:mx-auto md:pb-10">
         <form
           action=""
-          className="flex flex-col gap-4"
+          className="flex flex-col gap-4 md:border md:p-10 md:rounded-md"
           onSubmit={submitTransaction}
         >
           <div className="flex flex-col gap-2">
@@ -95,7 +95,7 @@ const AddTransaction = () => {
             <select
               name="transaction_type"
               id=""
-              className="p-2 rounded-md active:outline focus:outline-blue-500 border-b-2 shadow-sm "
+              className="p-2 rounded-md active:outline focus:outline-blue-500 border-b-2 shadow-sm md:border-slate-300 "
               required
             >
               <option value="cash-in">Cash-in</option>
@@ -115,12 +115,12 @@ const AddTransaction = () => {
                 type="text"
                 name={form.attribute}
                 required
-                className="p-2 rounded-md active:outline focus:outline-blue-500 border-b-2 shadow-sm"
+                className="p-2 rounded-md active:outline focus:outline-blue-500 border-b-2 shadow-sm  md:border-slate-300 "
               />
             </div>
           ))}
 
-          <button className="mt-4 p-2 rounded-md active:outline focus:outline-blue-500 border-b-2 shadow-sm bg-blue-500 text-slate-50 font-semibold text-xl">
+          <button className="mt-4 p-2 rounded-md active:outline focus:outline-blue-500 hover:bg-blue-600 border-b-2 shadow-sm bg-blue-500 text-slate-50 font-semibold text-xl">
             Add Transaction
           </button>
         </form>

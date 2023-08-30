@@ -124,10 +124,10 @@ const Transactions = () => {
 
   return (
     <>
-      <main className="pt-4 h-screen ">
-        <div className="mx-2">
+      <main className="pt-4 h-screen md:max-w-4xl md:mx-auto">
+        <div className="mx-2 ">
           <div className="ps-6 py-8 pe-10 flex justify-between items-center rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 ">
-            <h2 className="text-xl font-semibold text-slate-50">
+            <h2 className="text-xl md:text-2xl font-semibold text-slate-50">
               GCash Transactions
             </h2>
             <MoneyIcon />
@@ -141,7 +141,7 @@ const Transactions = () => {
               className={`${
                 transactionsLocation?.state === tabmenu.toLowerCase() &&
                 "text-blue-600 font-semibold "
-              }focus:text-blue-600 focus:font-semibold`}
+              }focus:text-blue-600 focus:font-semibold cursor-pointer`}
               value={tabmenu}
               onClick={clickTabeMenu}
             />

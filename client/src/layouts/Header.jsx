@@ -15,7 +15,7 @@ const Header = () => {
   return (
     <>
       <ToggleSidebarContext.Provider value={{ toggleSideBar }}>
-        <header className="p-3 shadow-md shadow-slate-200">
+        <header className="p-3 md:max-w-5xl md:mx-auto md:mt-6 shadow-md  shadow-slate-200">
           <div className="flex justify-between items-center">
             <div>
               <img src={logo} alt="this is logo" className="h-8 w-8" />
