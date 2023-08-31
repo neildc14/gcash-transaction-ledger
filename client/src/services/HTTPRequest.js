@@ -7,25 +7,25 @@ export default class HTTPRequest {
 }
 
 export class HttpGet {
-  async request(endpoint) {
-    return await axios.get(endpoint);
+  async request(endpoint, headers) {
+    return await axios.get(endpoint, { headers });
   }
 }
 
 export class HttpPost {
-  async request(endpoint, data) {
-    return await axios.post(endpoint, data);
+  async request(endpoint, data, headers) {
+    return await axios.post(endpoint, data, { headers });
   }
 }
 
 export class HttpPut {
-  async request(endpoint, data) {
-    return await axios.put(endpoint, data);
+  async request(endpoint, data, headers) {
+    return await axios.put(endpoint, data, { headers });
   }
 }
 
 export class HttpDelete {
-  async request(endpoint) {
-    return await axios.delete(endpoint);
+  async request(endpoint, headers) {
+    return await axios.delete(endpoint, { headers });
   }
 }

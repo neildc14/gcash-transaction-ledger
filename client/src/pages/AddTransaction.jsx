@@ -7,13 +7,19 @@ import {
   CloseIcon,
   DashboardIcon,
 } from "../components/SGVIcons";
+import Authorization from "../utils/auth-credentials";
+import { useAuth } from "../context/AuthContext";
 
 const AddTransaction = () => {
   const [isSuccessful, setSuccessful] = useState(false);
   const transactionRequest = new TransactionRequest();
+
+  const credentials = useAuth();
+  const { token } = credentials || {};
+  const headers = token ? Authorization(token) : null;
   const createTransactionMutation = useMutation({
     mutationFn: (new_transaction) =>
-      transactionRequest.createTransaction(new_transaction),
+      transactionRequest.createTransaction(new_transaction, headers),
     onError: (error) => {
       console.log(error);
     },

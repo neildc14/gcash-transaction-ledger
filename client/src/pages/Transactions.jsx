@@ -12,6 +12,8 @@ import {
   UpdateIcon,
   ViewIcon,
 } from "../components/SGVIcons";
+import Authorization from "../utils/auth-credentials";
+import { useAuth } from "../context/AuthContext";
 
 const Transactions = () => {
   const [transaction_results, setTransactionResults] = useState([]);
@@ -19,13 +21,20 @@ const Transactions = () => {
   const transactionRequest = new TransactionRequest();
   const transactionsLocation = useLocation();
 
+  const credentials = useAuth();
+  const { token } = credentials || {};
+  const headers = token ? Authorization(token) : null;
+
   const {
     data: transactions_data,
     error,
     isError,
   } = useQuery({
     queryKey: [import.meta.env.VITE_REACT_APP_TRANSACTION_KEY],
-    queryFn: () => transactionRequest.getAllTransactions(),
+    queryFn: () => {
+      return transactionRequest.getAllTransactions(headers);
+    },
+    enabled: !!headers,
   });
 
   const filterByTabMenu = useCallback(

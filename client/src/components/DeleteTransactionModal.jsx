@@ -2,6 +2,8 @@ import Modal from "./Modal";
 import PropTypes from "prop-types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import TransactionRequest from "../services/transactionRequest";
+import Authorization from "../utils/auth-credentials";
+import { useAuth } from "../context/AuthContext";
 
 const DeleteTransactionModal = ({
   modalOpen,
@@ -11,9 +13,12 @@ const DeleteTransactionModal = ({
   const transactionRequest = new TransactionRequest();
   const queryClient = useQueryClient();
 
+  const credentials = useAuth();
+  const { token } = credentials || {};
+  const headers = token ? Authorization(token) : null;
   const transactionMutation = useMutation({
     mutationFn: (transaction_id) =>
-      transactionRequest.deleteTransaction(transaction_id),
+      transactionRequest.deleteTransaction(transaction_id, headers),
     onSuccess: () => {
       queryClient.invalidateQueries(
         import.meta.env.VITE_REACT_APP_TRANSACTION_KEY

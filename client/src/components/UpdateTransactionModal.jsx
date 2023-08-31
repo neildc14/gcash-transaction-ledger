@@ -2,6 +2,8 @@ import Modal from "./Modal";
 import PropTypes from "prop-types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import TransactionRequest from "../services/transactionRequest";
+import Authorization from "../utils/auth-credentials";
+import { useAuth } from "../context/AuthContext";
 
 const UpdateTransactionModal = ({
   modalOpen,
@@ -11,11 +13,16 @@ const UpdateTransactionModal = ({
 }) => {
   const queryClient = useQueryClient();
   const transactionRequest = new TransactionRequest();
+  const credentials = useAuth();
+  const { token } = credentials || {};
+  const headers = token ? Authorization(token) : null;
+
   const transactionMutation = useMutation({
     mutationFn: (updatedTransaction) => {
       transactionRequest.updateTransaction(
         updatedTransaction,
-        transaction_slip?._id
+        transaction_slip?._id,
+        headers
       );
     },
     onError: (error) => {
