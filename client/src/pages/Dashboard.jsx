@@ -1,12 +1,19 @@
 import DashboardCard from "../components/Card";
 import TotalRequest from "../services/totalRequest";
 import { useQuery } from "@tanstack/react-query";
+import Authorization from "../utils/auth-credentials";
+import { useAuth } from "../context/AuthContext";
 
 const Dashboard = () => {
   const totalRequest = new TotalRequest();
+
+  const credentials = useAuth();
+  const { token } = credentials || {};
+  const headers = token ? Authorization(token) : null;
   const { data: totalTransactions } = useQuery({
     queryKey: [import.meta.env.VITE_REACT_APP_TOTAL_KEY],
-    queryFn: () => totalRequest.getTotal(),
+    queryFn: () => totalRequest.getTotal(headers),
+    enabled: !!headers,
   });
 
   return (

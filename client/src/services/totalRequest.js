@@ -6,9 +6,12 @@ export default class TotalRequest extends HTTPRequest {
     this.uri = import.meta.env.VITE_REACT_APP_TOTAL_URI;
   }
 
-  async getTotal() {
+  async getTotal({ headers }) {
     const httpGet = new HttpGet();
-    const response = await httpGet.request(`${this.endpoint}${this.uri}`);
+    const response = await httpGet.request(
+      `${this.endpoint}${this.uri}`,
+      headers
+    );
     return response.data;
   }
 }
