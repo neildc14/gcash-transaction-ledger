@@ -23,6 +23,7 @@ const DeleteTransactionModal = ({
       queryClient.invalidateQueries(
         import.meta.env.VITE_REACT_APP_TRANSACTION_KEY
       );
+      queryClient.invalidateQueries(import.meta.env.VITE_REACT_APP_TOTAL_KEY);
 
       closeModal();
     },

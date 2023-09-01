@@ -29,9 +29,10 @@ const UpdateTransactionModal = ({
       console.log(error);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([
-        import.meta.env.VITE_REACT_APP_TRANSACTION_KEY,
-      ]);
+      queryClient.invalidateQueries(
+        import.meta.env.VITE_REACT_APP_TRANSACTION_KEY
+      );
+      queryClient.invalidateQueries(import.meta.env.VITE_REACT_APP_TOTAL_KEY);
       closeModal();
     },
   });
@@ -144,7 +145,10 @@ const UpdateTransactionModal = ({
             className="p-2 rounded-md active:outline focus:outline-blue-500 border-b-2 shadow-sm"
           />
         </div>
-        <button className="mt-4 p-2 rounded-md active:outline focus:outline-blue-500 border-b-2 shadow-sm bg-blue-500 text-slate-50 font-semibold text-xl">
+        <button
+          type="submit"
+          className="mt-4 p-2 rounded-md active:outline focus:outline-blue-500 border-b-2 shadow-sm bg-blue-500 text-slate-50 font-semibold text-xl"
+        >
           Update Transaction
         </button>
       </form>

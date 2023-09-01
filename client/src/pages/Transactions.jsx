@@ -22,7 +22,6 @@ const Transactions = () => {
   const transactionsLocation = useLocation();
 
   const { credentials } = useAuth();
-
   const { token } = credentials || {};
   const headers = token ? Authorization(token) : null;
 
@@ -64,21 +63,15 @@ const Transactions = () => {
     }
   }, [transactionsLocation, filterByTabMenu, transactions_data]);
 
-  const clickTabeMenu = (tabEvent) => {
-    const tabValue = tabEvent.target.value.toLocaleLowerCase();
+  const clickTabMenu = (tabEvent) => {
+    const tabValue = tabEvent.target.value.toLowerCase();
+    let filteredResults = transactions_data;
 
-    switch (tabValue) {
-      case "all":
-        return setTransactionResults(transactions_data);
-      case "cash-in":
-        return setTransactionResults(filterByTabMenu(tabValue));
-      case "cash-out":
-        return setTransactionResults(filterByTabMenu(tabValue));
-      case "bank-transfer":
-        return setTransactionResults(filterByTabMenu(tabValue));
-      default:
-        return null;
+    if (tabValue !== "all") {
+      filteredResults = filterByTabMenu(tabValue);
     }
+
+    setTransactionResults(filteredResults);
   };
 
   const searchPattern = (searchValue) => {
@@ -153,7 +146,7 @@ const Transactions = () => {
                 "text-blue-600 font-semibold "
               }focus:text-blue-600 focus:font-semibold cursor-pointer`}
               value={tabmenu}
-              onClick={clickTabeMenu}
+              onClick={clickTabMenu}
             />
           ))}
         </div>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import TransactionRequest from "../services/transactionRequest";
 import {
@@ -13,6 +13,7 @@ import { useAuth } from "../context/AuthContext";
 const AddTransaction = () => {
   const [isSuccessful, setSuccessful] = useState(false);
   const transactionRequest = new TransactionRequest();
+  const queryClient = useQueryClient();
 
   const { credentials } = useAuth();
   const { token } = credentials || {};
@@ -24,6 +25,11 @@ const AddTransaction = () => {
       console.log(error);
     },
     onSuccess: () => {
+      queryClient.invalidateQueries(
+        import.meta.env.VITE_REACT_APP_TRANSACTION_KEY
+      );
+      queryClient.invalidateQueries(import.meta.env.VITE_REACT_APP_TOTAL_KEY);
+
       setSuccessful(true);
     },
   });
@@ -133,7 +139,10 @@ const AddTransaction = () => {
             </div>
           ))}
 
-          <button className="mt-4 p-2 rounded-md active:outline focus:outline-blue-500 hover:bg-blue-600 border-b-2 shadow-sm bg-blue-500 text-slate-50 font-semibold text-xl">
+          <button
+            type="submit"
+            className="mt-4 p-2 rounded-md active:outline focus:outline-blue-500 hover:bg-blue-600 border-b-2 shadow-sm bg-blue-500 text-slate-50 font-semibold text-xl"
+          >
             Add Transaction
           </button>
         </form>
