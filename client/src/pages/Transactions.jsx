@@ -21,7 +21,8 @@ const Transactions = () => {
   const transactionRequest = new TransactionRequest();
   const transactionsLocation = useLocation();
 
-  const credentials = useAuth();
+  const { credentials } = useAuth();
+
   const { token } = credentials || {};
   const headers = token ? Authorization(token) : null;
 

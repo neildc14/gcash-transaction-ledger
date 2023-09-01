@@ -13,7 +13,7 @@ const DeleteTransactionModal = ({
   const transactionRequest = new TransactionRequest();
   const queryClient = useQueryClient();
 
-  const credentials = useAuth();
+  const { credentials } = useAuth();
   const { token } = credentials || {};
   const headers = token ? Authorization(token) : null;
   const transactionMutation = useMutation({

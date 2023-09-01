@@ -7,7 +7,7 @@ import { useAuth } from "../context/AuthContext";
 const Dashboard = () => {
   const totalRequest = new TotalRequest();
 
-  const credentials = useAuth();
+  const { credentials } = useAuth();
   const { token } = credentials || {};
   const headers = token ? Authorization(token) : null;
   const { data: totalTransactions } = useQuery({

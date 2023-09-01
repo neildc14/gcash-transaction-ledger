@@ -1,25 +1,55 @@
 import Home from "./pages/Home";
 import { Routes, Route } from "react-router-dom";
 import Transactions from "./pages/Transactions";
-import Header from "./layouts/Header";
 import AddTransaction from "./pages/AddTransaction";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <>
       <AuthProvider>
-        <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="login" element={<Login />} />
-          <Route path="signup" element={<Signup />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/transactions" element={<Transactions />} />
-          <Route path="/add-transaction" element={<AddTransaction />} />
+          <Route
+            path="/home"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/transactions"
+            element={
+              <ProtectedRoute>
+                <Transactions />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/add-transaction"
+            element={
+              <ProtectedRoute>
+                <AddTransaction />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />{" "}
         </Routes>
       </AuthProvider>
     </>

@@ -35,21 +35,24 @@ const Header = () => {
   );
 };
 
-const navigationLinks = [
-  { href: "/login", text: "Login" },
-  { href: "/dashboard", text: "My Dashboard" },
-  { href: "/add-transaction", text: "Add Transaction" },
-  { href: "/transactions", text: "All Transactions" },
-];
-
 function NavigationLink({ href, text }) {
   const { toggleSideBar } = useContext(ToggleSidebarContext);
   const navigateToPages = useNavigate();
+
+  const navigateToLogin = useNavigate();
+  const handleLogout = () => {
+    if (href === "/logout") {
+      localStorage.removeItem("credentials");
+      navigateToLogin("/login");
+    }
+  };
+
   return (
     <button
       onClick={() => {
         navigateToPages(href);
         toggleSideBar();
+        handleLogout();
       }}
       href={href}
       className="text-xl md:text-base text-slate-50 md:text-slate-500 md:hover:text-blue-500 font-medium"
@@ -60,6 +63,13 @@ function NavigationLink({ href, text }) {
 }
 
 function NavBar() {
+  const navigationLinks = [
+    { href: "/dashboard", text: "My Dashboard" },
+    { href: "/add-transaction", text: "Add Transaction" },
+    { href: "/transactions", text: "All Transactions" },
+    { href: "/logout", text: "Logout" },
+  ];
+
   return (
     <nav className="pt-40 md:pt-0 flex justify-center items-center flex-col md:flex-row gap-4 md:gap-6">
       {navigationLinks.map((link) => (

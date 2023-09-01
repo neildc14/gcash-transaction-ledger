@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import AuthenticationRequest from "../services/authenticationRequest";
 import useCredentials from "../hooks/useCredentials";
-
+import { useAuth } from "../context/AuthContext";
 const Signup = () => {
   const navigateToSignUp = useNavigate();
   const navigateToHome = useNavigate();
+  const { setCredentials } = useAuth();
 
   const [userCredentials, handleInputChange] = useCredentials();
   console.log(userCredentials);
@@ -22,7 +23,8 @@ const Signup = () => {
     onSuccess: (response) => {
       const user_data = JSON.stringify(response?.data);
       localStorage.setItem("credentials", user_data);
-      navigateToHome("/");
+      setCredentials(response.data);
+      navigateToHome("/home");
     },
   });
 
@@ -46,7 +48,7 @@ const Signup = () => {
   ];
 
   return (
-    <main className="pt-4 h-screen md:max-w-4xl md:mx-auto">
+    <main className="pt-10 h-screen md:max-w-4xl md:mx-auto">
       <div className="mx-2">
         <img src={logo} alt="gcash logo" className="h-24 w-24 mx-auto" />
         <h2 className="mt-2 text-center text-2xl font-semibold">

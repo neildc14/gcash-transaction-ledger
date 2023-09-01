@@ -13,7 +13,7 @@ const UpdateTransactionModal = ({
 }) => {
   const queryClient = useQueryClient();
   const transactionRequest = new TransactionRequest();
-  const credentials = useAuth();
+  const { credentials } = useAuth();
   const { token } = credentials || {};
   const headers = token ? Authorization(token) : null;
 
