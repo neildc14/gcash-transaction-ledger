@@ -28,7 +28,7 @@ const ViewTransactionModal = ({ modalOpen, closeModal, transaction_slip }) => {
           <span className="text-gray-600">
             {" "}
             <span>&#8369;</span>
-            {transaction_slip?.sub_total}
+            {transaction_slip?.sub_total}.00
           </span>
         </p>
         <p className="py-1 text-lg">
@@ -36,14 +36,14 @@ const ViewTransactionModal = ({ modalOpen, closeModal, transaction_slip }) => {
           <span className="text-gray-600">
             {" "}
             <span>&#8369;</span>
-            {transaction_slip?.service_fee}
+            {transaction_slip?.service_fee}.00
           </span>
         </p>
         <p className="py-1 text-lg">
           <span className="font-semibold "> Total: </span>
           <span className="text-gray-600">
             <span>&#8369;</span>
-            {transaction_slip?.total}
+            {transaction_slip?.total}.00
           </span>
         </p>
         <button
