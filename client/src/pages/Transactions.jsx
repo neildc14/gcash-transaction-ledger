@@ -14,6 +14,7 @@ import {
 } from "../components/SGVIcons";
 import Authorization from "../utils/auth-credentials";
 import { useAuth } from "../context/AuthContext";
+import useModal from "../hooks/useModal";
 
 const Transactions = () => {
   const [transaction_results, setTransactionResults] = useState([]);
@@ -97,31 +98,9 @@ const Transactions = () => {
     setTransactionResults(searchResults);
   };
 
-  const [modalViewOpen, setModalViewOpen] = useState(false);
-  const [modalUpdateOpen, setModalUpdateOpen] = useState(false);
-  const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
-
-  const openViewModal = () => {
-    setModalViewOpen(true);
-  };
-
-  const closeViewModal = () => {
-    setModalViewOpen(false);
-  };
-  const openUpdateModal = () => {
-    setModalUpdateOpen(true);
-  };
-
-  const closeUpdateModal = () => {
-    setModalUpdateOpen(false);
-  };
-  const openDeleteModal = () => {
-    setModalDeleteOpen(true);
-  };
-
-  const closeDeleteModal = () => {
-    setModalDeleteOpen(false);
-  };
+  const [modalViewOpen, openViewModal, closeViewModal] = useModal();
+  const [modalUpdateOpen, openUpdateModal, closeUpdateModal] = useModal();
+  const [modalDeleteOpen, openDeleteModal, closeDeleteModal] = useModal();
 
   const tabMenus = ["All", "Cash-In", "Cash-Out", "Bank-Transfer"];
 
