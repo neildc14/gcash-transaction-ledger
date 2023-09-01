@@ -10,7 +10,6 @@ const Signup = () => {
   const { setCredentials } = useAuth();
 
   const [userCredentials, handleInputChange] = useCredentials();
-  console.log(userCredentials);
 
   const authenticationRequest = new AuthenticationRequest();
   const signUpMutation = useMutation({
