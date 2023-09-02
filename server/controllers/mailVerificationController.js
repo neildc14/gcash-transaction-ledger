@@ -31,7 +31,7 @@ const postEmail = async (req, res) => {
       console.log("Email sent: " + info.response);
       res.status(200).json({ message: "Verification email sent" });
     }
-  });
+  }); 
 };
 
 module.exports = { postEmail };

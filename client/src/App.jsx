@@ -7,12 +7,14 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { Navigate } from "react-router-dom";
 
 function App() {
   return (
     <>
       <AuthProvider>
         <Routes>
+          <Route path="/" element={<Navigate to="/login" />} />
           <Route
             path="/home"
             element={
