@@ -8,6 +8,7 @@ import Signup from "./pages/Signup";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { Navigate } from "react-router-dom";
+import PageNotFound from "./components/PageNotFound";
 
 function App() {
   return (
@@ -51,7 +52,8 @@ function App() {
 
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />{" "}
+          <Route path="/signup" element={<Signup />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </AuthProvider>
     </>
