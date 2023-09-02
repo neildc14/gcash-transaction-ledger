@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const TransactionSchema = new Schema(
   {
+    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
     transaction_type: {
       type: String,
       default: "cash-in",

@@ -22,8 +22,9 @@ const calculateTotalsPerTransactionType = (transactions) => {
 };
 
 const getAllTotal = async (req, res) => {
+  const filter = {user:req.user.id}
   try {
-    const allTransactions = await TransactionModel.find();
+    const allTransactions = await TransactionModel.find(filter);
 
     const transactionTypeTotals =
       calculateTotalsPerTransactionType(allTransactions);

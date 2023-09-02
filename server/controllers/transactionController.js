@@ -2,8 +2,10 @@ const Transaction = require("../models/TransactionModel");
 const mongoose = require("mongoose");
 
 const getAllTransactions = async (req, res) => {
+  console.log(req.user._id, "USERSS");
+  const filter = { user: req.user._id };
   try {
-    const transactions = await Transaction.find().exec();
+    const transactions = await Transaction.find(filter).exec();
 
     if (transactions.length === 0) {
       const error = { message: "No Transactions found!" };
@@ -16,7 +18,7 @@ const getAllTransactions = async (req, res) => {
   }
 };
 
-const getTransaction = async (req, res) => {
+const getTransaction = async (req, res) => {  
   const { id } = req.params;
 
   try {
@@ -47,6 +49,7 @@ const postTransaction = async (req, res) => {
     let error;
 
     const newTransaction = await Transaction.create({
+      user: req.user._id,
       transaction_type,
       customer: customer,
       account_number,
@@ -77,7 +80,7 @@ const updateTransaction = async (req, res) => {
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       error = { message: "Invalid ID" };
-      throw error;  
+      throw error;
     }
 
     const updatedTransaction = await Transaction.findOneAndUpdate(
