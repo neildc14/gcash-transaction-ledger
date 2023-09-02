@@ -42,8 +42,14 @@ const AddTransaction = () => {
   };
 
   const navigationHistory = useNavigate();
+  const navigateToTransactions = useNavigate();
+
   const goBackToPreviousPage = () => {
     navigationHistory(-1);
+  };
+
+  const goToTransactions = () => {
+    navigateToTransactions("/transactions");
   };
 
   const closeMessage = () => {
@@ -85,12 +91,18 @@ const AddTransaction = () => {
 
           <DashboardIcon />
         </div>
-        <div className="py-4">
+        <div className="py-4 inline-flex gap-2">
           <button
             className="inline-flex gap-2 py-1 px-2 rounded-sm md:rounded-md bg-gray-200 text-lg font-semibold"
             onClick={goBackToPreviousPage}
           >
             <ArrowLeftIcon /> Back
+          </button>
+          <button
+            className="inline-flex gap-2 py-1 px-2 rounded-sm md:rounded-md bg-blue-300 text-lg font-semibold"
+            onClick={goToTransactions}
+          >
+            Browse Transactions
           </button>
         </div>
         <hr />
