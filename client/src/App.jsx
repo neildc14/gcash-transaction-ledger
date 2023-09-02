@@ -15,8 +15,9 @@ function App() {
     <>
       <AuthProvider>
         <Routes>
-          <Route path="/" element={<Navigate to="/login" />} />
+          <Route exact path="/" element={<Navigate to="/login" />} />
           <Route
+            exact
             path="/home"
             element={
               <ProtectedRoute>
@@ -25,6 +26,7 @@ function App() {
             }
           />
           <Route
+            exact
             path="/dashboard"
             element={
               <ProtectedRoute>
@@ -33,6 +35,7 @@ function App() {
             }
           />
           <Route
+            exact
             path="/transactions"
             element={
               <ProtectedRoute>
@@ -41,6 +44,7 @@ function App() {
             }
           />
           <Route
+            exact
             path="/add-transaction"
             element={
               <ProtectedRoute>
@@ -48,12 +52,10 @@ function App() {
               </ProtectedRoute>
             }
           />
-        </Routes>
 
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="*" element={<PageNotFound />} />
+          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/signup" element={<Signup />} />
+          <Route exact path="*" element={<PageNotFound />} />
         </Routes>
       </AuthProvider>
     </>
