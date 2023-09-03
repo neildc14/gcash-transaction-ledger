@@ -26,16 +26,16 @@ UserSchema.statics.signup = async function (email, password) {
 
 UserSchema.statics.login = async function (email, password) {
   const user = await this.findOne({ email });
-
-  let errorMessage = { message: "User account not found." };
+  let errorMessage = {};
   if (!user) {
+    errorMessage["email"] = "User account not found.";
     throw errorMessage;
   }
 
   const matchPassword = await bcrypt.compare(password, user.password);
 
-  errorMessage = { message: "Incorrect password" };
   if (!matchPassword) {
+    errorMessage["password"] = "Incorrect Password.";
     throw errorMessage;
   }
 
