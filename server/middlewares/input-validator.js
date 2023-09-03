@@ -1,32 +1,30 @@
 const validator = require("validator");
 
-const validateUserInput = (req, res, next) => {
-  const validationErrors = validateBody(req.body);
-
-  if (validationErrors.length > 0) {
-    console.log("error");
-    return res.status(400).json({ validationErrors });
-  } else if (validationErrors.length === 0) {
-    console.log("next", validationErrors.length, validationErrors);
-    next();
-  }
-};
+function isEmptyObject(obj) {
+  return Object.keys(obj).length === 0;
+}
 
 function validateBody(body) {
-  const validationErrors = [];
+  const validationErrors = {};
 
   if (!body.email || !validator.isEmail(body.email)) {
-    validationErrors.push({ field: "email", message: "Invalid email address" });
+    validationErrors["email"] = "Invalid email address";
   }
 
   if (!body.password || body.password.length < 8) {
-    validationErrors.push({
-      field: "password",
-      message: "Password must be at least 8 characters long",
-    });
+    validationErrors["password"] = "Password must be 8 characters long.";
   }
 
   return validationErrors;
 }
+
+const validateUserInput = (req, res, next) => {
+  const validationErrors = validateBody(req.body);
+
+  if (!isEmptyObject(validationErrors))
+    return res.status(400).json(validationErrors);
+
+  if (isEmptyObject(validationErrors)) next();
+};
 
 module.exports = validateUserInput;
