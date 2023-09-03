@@ -10,8 +10,8 @@ const UserSchema = new Schema({
 UserSchema.statics.signup = async function (email, password) {
   const exists = await this.findOne({ email });
 
-  let errorMessage = { message: "This email is already in use." };
   if (exists) {
+    let errorMessage = { email: "This email is already in use." };
     throw errorMessage;
   }
 
@@ -19,7 +19,7 @@ UserSchema.statics.signup = async function (email, password) {
   const hash = await bcrypt.hash(password, salt);
   const user = await this.create({
     email,
-    password: hash,
+    password: hash, 
   });
   return user;
 };

@@ -4,7 +4,10 @@ import { useMutation } from "@tanstack/react-query";
 import AuthenticationRequest from "../services/authenticationRequest";
 import useCredentials from "../hooks/useCredentials";
 import { useAuth } from "../context/AuthContext";
+import { useState } from "react";
+
 const Signup = () => {
+  const [signupError, setSignupError] = useState(null);
   const navigateToSignUp = useNavigate();
   const navigateToHome = useNavigate();
   const { setCredentials } = useAuth();
@@ -17,7 +20,7 @@ const Signup = () => {
       return authenticationRequest.SignUp(credentials);
     },
     onError: (error) => {
-      console.log(error);
+      setSignupError(error.response.data);
     },
     onSuccess: (response) => {
       const user_data = JSON.stringify(response?.data);
@@ -70,6 +73,9 @@ const Signup = () => {
                   required
                   className="p-2 rounded-md active:outline focus:outline-blue-500 border-b-2 shadow-sm  md:border-slate-300 "
                 />
+                <p className="text-red-500">
+                  {signupError && signupError[form.attribute]}
+                </p>
               </div>
             ))}
             <div className="w-full">
