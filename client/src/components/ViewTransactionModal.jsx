@@ -4,7 +4,7 @@ const ViewTransactionModal = ({ modalOpen, closeModal, transaction_slip }) => {
   return (
     <Modal isOpen={modalOpen} onClose={closeModal}>
       <h2 className="text-xl font-semibold mb-4">
-        Tran. Slip ID: {transaction_slip?._id?.slice(0, 6)}
+        Tran. Slip ID: {transaction_slip?._id?.slice(0, 8).toUpperCase()}
       </h2>
       <section>
         <p className="py-1 text-lg">

@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { ArrowRightIcon } from "./SGVIcons";
 const DashboardCard = ({ transaction }) => {
-  console.log({ transaction });
   const navigateToTransactions = useNavigate();
 
   const handleNavigateClick = () => {

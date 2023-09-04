@@ -2,7 +2,6 @@ const Transaction = require("../models/TransactionModel");
 const mongoose = require("mongoose");
 
 const getAllTransactions = async (req, res) => {
-  console.log(req.user._id, "USERSS");
   const filter = { user: req.user._id };
   try {
     const transactions = await Transaction.find(filter).exec();
@@ -18,7 +17,7 @@ const getAllTransactions = async (req, res) => {
   }
 };
 
-const getTransaction = async (req, res) => {  
+const getTransaction = async (req, res) => {
   const { id } = req.params;
 
   try {
