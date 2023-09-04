@@ -10,6 +10,10 @@ const getAllTransactions = async (req, res) => {
       const error = { message: "No Transactions found!" };
       throw error;
     }
+
+    res.header("Access-Control-Allow-Origin", process.env.FRONT_END_URL);
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.status(200).json(transactions);
   } catch (error) {
     res.status(400).json(error);
   }
