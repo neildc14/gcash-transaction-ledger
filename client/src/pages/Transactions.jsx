@@ -226,10 +226,10 @@ const Transactions = () => {
   );
 };
 
-UpdateTransactionModal.propTypes = {
-  modalOpen: PropTypes.func.isRequired,
-  closeModal: PropTypes.func.isRequired,
-  setTransactionSlip: PropTypes.func.isRequired,
-};
+// UpdateTransactionModal.propTypes = {
+//   modalOpen: PropTypes.func.isRequired,
+//   closeModal: PropTypes.func.isRequired,
+//   setTransactionSlip: PropTypes.func.isRequired,
+// };
 
 export default Transactions;

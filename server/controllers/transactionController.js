@@ -11,6 +11,8 @@ const getAllTransactions = async (req, res) => {
       throw error;
     }
 
+    res.header("Access-Control-Allow-Origin", process.env.FRONT_END_URL);
+    res.header("Access-Control-Allow-Credentials", "true");
     res.status(200).json(transactions);
   } catch (error) {
     res.status(400).json(error);
@@ -34,6 +36,8 @@ const getTransaction = async (req, res) => {
       throw error;
     }
 
+    res.header("Access-Control-Allow-Origin", process.env.FRONT_END_URL);
+    res.header("Access-Control-Allow-Credentials", "true");
     res.status(200).json(transaction);
   } catch (error) {
     res.status(400).json(error);
@@ -62,6 +66,8 @@ const postTransaction = async (req, res) => {
       throw error;
     }
 
+    res.header("Access-Control-Allow-Origin", process.env.FRONT_END_URL);
+    res.header("Access-Control-Allow-Credentials", "true");
     res.status(201).json(newTransaction);
   } catch (error) {
     res.status(400).json(error);
@@ -101,6 +107,8 @@ const updateTransaction = async (req, res) => {
       throw error;
     }
 
+    res.header("Access-Control-Allow-Origin", process.env.FRONT_END_URL);
+    res.header("Access-Control-Allow-Credentials", "true");
     res.status(201).json(updatedTransaction);
   } catch (error) {
     res.status(400).json(error);
@@ -118,6 +126,9 @@ const deleteTransaction = async (req, res) => {
       let error = { message: "Failed to delete transaction!" };
       throw error;
     }
+
+    res.header("Access-Control-Allow-Origin", process.env.FRONT_END_URL);
+    res.header("Access-Control-Allow-Credentials", "true");
     res.status(200).json({ message: "Transaction deleted successfully!" });
   } catch (error) {
     res.status(400).json(error);
