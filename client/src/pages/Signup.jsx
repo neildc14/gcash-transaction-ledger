@@ -5,6 +5,7 @@ import AuthenticationRequest from "../services/authenticationRequest";
 import useCredentials from "../hooks/useCredentials";
 import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
+import Cookies from "js-cookie";
 
 const Signup = () => {
   const [signupError, setSignupError] = useState(null);
@@ -24,8 +25,8 @@ const Signup = () => {
     },
     onSuccess: (response) => {
       const user_data = JSON.stringify(response?.data);
-      localStorage.setItem("credentials", user_data);
       setCredentials(response.data);
+      Cookies.set("jwt", user_data);
       navigateToHome("/home");
     },
   });

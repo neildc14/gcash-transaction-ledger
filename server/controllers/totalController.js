@@ -22,7 +22,7 @@ const calculateTotalsPerTransactionType = (transactions) => {
 };
 
 const getAllTotal = async (req, res) => {
-  const filter = {user:req.user.id}
+  const filter = { user: req.user.id };
   try {
     const allTransactions = await TransactionModel.find(filter);
 
@@ -55,6 +55,8 @@ const getAllTotal = async (req, res) => {
       ),
     ];
 
+    res.header("Access-Control-Allow-Origin", process.env.FRONT_END_URL);
+    res.header("Access-Control-Allow-Credentials", "true");
     res.status(200).json(totalTransactions);
   } catch (error) {
     res.status(500).json(error);

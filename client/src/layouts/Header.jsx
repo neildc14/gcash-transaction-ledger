@@ -3,7 +3,7 @@ import { useState, useContext, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { CloseIcon, HamburgerMenuIcon } from "../components/SGVIcons";
 import PropTypes from "prop-types";
-
+import Cookies from "js-cookie";
 const ToggleSidebarContext = createContext(null);
 
 const Header = () => {
@@ -43,6 +43,7 @@ function NavigationLink({ href, text }) {
   const handleLogout = () => {
     if (href === "/logout") {
       localStorage.removeItem("credentials");
+      Cookies.remove("jwt");
       navigateToLogin("/login");
     }
   };

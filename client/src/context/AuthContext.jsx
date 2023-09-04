@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useLocation, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const AuthContext = createContext();
 
@@ -10,14 +11,13 @@ export const AuthProvider = ({ children }) => {
   const navigateToLogin = useNavigate();
 
   useEffect(() => {
-    let stored_credentials = localStorage.getItem("credentials");
-    if (stored_credentials) {
-      setCredentials(JSON.parse(stored_credentials));
+    let cookie = Cookies.get("jwt");
+    if (cookie) {
+      setCredentials(JSON.parse(cookie));
     }
   }, []);
 
   useEffect(() => {
-    console.log(credentials);
     if (!credentials && location.pathname === "/logout") {
       navigateToLogin("/login");
     }

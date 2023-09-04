@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-
+const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
@@ -11,9 +11,10 @@ const total = require("./routes/total");
 const users = require("./routes/users");
 
 //middlewares
-app.use(cors({ origin: "*" }));
+app.use(cors({ origin: process.env.FRONT_END_URL, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 //routes
 app.use("/api/transactions", transactions);
